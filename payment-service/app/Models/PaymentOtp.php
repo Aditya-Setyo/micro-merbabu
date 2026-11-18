@@ -10,12 +10,9 @@ class PaymentOtp extends Model
     protected $fillable = [
         'payment_id',
         'email',
-        'otp_hash',
-        'attempts',
-        'max_attempts',
+        'otp_code',
+        'is_verified',
         'expires_at',
-        'verified_at',
-        'sent_at',
     ];
 
     protected function casts(): array
