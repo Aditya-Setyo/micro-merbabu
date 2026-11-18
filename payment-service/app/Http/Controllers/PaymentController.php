@@ -7,6 +7,7 @@ use App\Models\PaymentOtp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use App\Services\CircuitBreaker;
 
 class PaymentController extends Controller
 {
@@ -158,63 +159,109 @@ class PaymentController extends Controller
 
     public function payVa(Request $request)
     {
-        if ($check = $this->checkToken($request)) {
-            return $check;
-        }
-
         $request->validate([
             'va_number' => 'required|string',
-            'amount' => 'required|numeric',
         ]);
 
+        // 1. Ini yang kemarin hilang, ini yang bikin $payment ada
         $payment = Payment::where('va_number', $request->va_number)->first();
 
         if (!$payment) {
             return response()->json([
                 'success' => false,
-                'message' => 'Nomor Virtual Account tidak ditemukan.'
+                'message' => 'Payment tidak ditemukan.',
             ], 404);
         }
 
         if ($payment->status === 'SUCCESS') {
             return response()->json([
-                'success' => false,
-                'message' => 'Pembayaran untuk VA ini sudah berhasil sebelumnya.'
-            ], 400);
-        }
-
-        if ($payment->amount != $request->amount) {
-            return response()->json([
-                'success' => false,
-                'message' => "Nominal pembayaran tidak sesuai. Tagihan: {$payment->amount}"
-            ], 400);
-        }
-
-        $verifiedOtp = PaymentOtp::where('payment_id', $payment->id)
-            ->where('is_verified', true)
-            ->first();
-
-        if (!$verifiedOtp) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Pembayaran ditolak: OTP belum diverifikasi.'
-            ], 403);
+                'success' => true,
+                'message' => 'Pembayaran untuk VA ini sudah berhasil sebelumnya.',
+                'payment_details' => $payment,
+            ], 200);
         }
 
         $payment->update(['status' => 'SUCCESS']);
 
-        $gateUrl = "http://127.0.0.1:8004/api/tickets/confirm";
-        $gateResponse = Http::post($gateUrl, [
-            'booking_id' => $payment->booking_id,
-            'payment_id' => $payment->id,
-            'status' => 'PAID',
-        ]);
+        // 2. Retry + Circuit Breaker untuk Gate
+        $circuit = new CircuitBreaker('gate');
 
+        // Cek Circuit Breaker, kalau OPEN langsung Fail Fast
+        if (!$circuit->canAttempt()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pembayaran berhasil, tapi konfirmasi tiket tertunda. Gate Service sedang OPEN (Fail Fast).',
+                'payment_details' => $payment,
+                'circuit_breaker' => [
+                    'state' => 'OPEN',
+                    'message' => 'HTTP 503 Fail Fast',
+                ],
+                'gate_service_response' => null,
+            ], 200);
+        }
+
+        $isHalfOpen = $circuit->getStateName() === 'HALF_OPEN';
+        $maxAttempts = $isHalfOpen ? 1 : 3;
+        $gateUrl = "http://127.0.0.1:8004/api/tickets/confirm";
+        $gateData = null;
+        $lastError = null;
+        $attempt = 1;
+
+        // Retry Mechanism, maksimal 3 percobaan
+        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+            try {
+                $gateResponse = Http::timeout(3)->post($gateUrl, [
+                    'booking_id' => $payment->booking_id,
+                    'payment_id' => $payment->id,
+                    'status' => 'PAID',
+                ]);
+
+                if ($gateResponse->successful()) {
+                    $gateData = $gateResponse->json() ?? $gateResponse->body();
+                    $circuit->recordSuccess();
+                    break;
+                }
+
+                throw new \Exception('Gate balas HTTP ' . $gateResponse->status());
+            } catch (\Exception $e) {
+                $lastError = $e->getMessage();
+                $circuit->recordFailure();
+
+                if ($attempt < $maxAttempts) {
+                    sleep(1);
+                    continue;
+                }
+            }
+        }
+
+        // Kalau semua retry gagal
+        if ($gateData === null) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pembayaran berhasil, tapi konfirmasi tiket gagal setelah ' . $maxAttempts . ' percobaan.',
+                'payment_details' => $payment,
+                'circuit_breaker' => [
+                    'state' => $circuit->getStateName(),
+                    'attempts' => $maxAttempts,
+                    'last_error' => $lastError,
+                ],
+                'gate_service_response' => [
+                    'success' => false,
+                    'message' => 'Gate Service tidak dapat dihubungi: ' . $lastError,
+                ],
+            ], 200);
+        }
+
+        // Kalau sukses
         return response()->json([
             'success' => true,
             'message' => 'Pembayaran Virtual Account berhasil diproses.',
             'payment_details' => $payment,
-            'gate_service_response' => $gateResponse->json() ?? $gateResponse->body()
+            'circuit_breaker' => [
+                'state' => $circuit->getStateName(),
+                'attempts' => $attempt,
+            ],
+            'gate_service_response' => $gateData,
         ], 200);
     }
 }
