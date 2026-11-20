@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaultInjectionController;
 
 Route::get('/health', function () {
     return response()->json([
@@ -21,3 +22,7 @@ Route::prefix('tickets')->group(function () {
     Route::post('/check-in', [TicketController::class, 'checkIn']);
     Route::post('/check-out', [TicketController::class, 'checkOut']);
 });
+
+Route::post('/fault-inject/enable', [FaultInjectionController::class, 'enable']);
+Route::post('/fault-inject/disable', [FaultInjectionController::class, 'disable']);
+Route::get('/fault-inject/status', [FaultInjectionController::class, 'status']);

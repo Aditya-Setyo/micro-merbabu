@@ -8,60 +8,69 @@ use App\Models\SosReport;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
-
 class TrackingController extends Controller
 {
-    // Petugas check-in, validasi dulu ke Gate 8004
+    // Dipanggil dari Gate setelah check-in di Gate valid
+    // Bukan check-in kedua, ini aktivasi tracking + lokasi pertama Basecamp
     public function checkIn(Request $request)
     {
         $request->validate([
             'ticket_code' => 'required|string',
+            'booking_id' => 'nullable|integer',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
+            'location_name' => 'nullable|string',
+            'location_note' => 'nullable|string',
         ]);
 
-        // 1. Validasi ke Gate
-        try {
-            $gateResponse = Http::timeout(3)->post('http://127.0.0.1:8004/api/tickets/validate', [
-                'ticket_code' => $request->ticket_code,
-            ]);
-            $gateData = $gateResponse->json();
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gate Service tidak dapat dihubungi: ' . $e->getMessage(),
-            ], 503);
-        }
-
-        if (!($gateData['success'] ?? false)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Tiket tidak valid: ' . ($gateData['message'] ?? 'Ditolak Gate'),
-            ], 400);
-        }
-
-        // 2. Cek sudah check-in atau belum
+        // Kalau sudah ada, jangan duplikat, balikin yang lama
         $existing = Tracking::where('ticket_code', $request->ticket_code)->first();
-        if ($existing && in_array($existing->status, ['CHECKED_IN', 'ON_TRACK', 'EMERGENCY'])) {
+        if ($existing) {
             return response()->json([
-                'success' => false,
-                'message' => 'Tiket ini sudah check-in.',
+                'success' => true,
+                'message' => 'Tracking sudah ada.',
                 'data' => $existing,
-            ], 400);
+            ], 200);
         }
 
-        // 3. Update status di Gate jadi CHECKED_IN juga
-        try {
-            Http::timeout(3)->post('http://127.0.0.1:8004/api/tickets/check-in', [
-                'ticket_code' => $request->ticket_code,
-            ]);
-        } catch (\Exception $e) {
-            // Tetap lanjut, yang penting tracking tersimpan
+        $bookingId = $request->booking_id;
+
+        // Kalau Gate tidak ngirim booking_id, baru validasi ke Gate untuk ambil booking_id
+        // Kalau Gate sudah ngirim, langsung pakai, tidak perlu manggil Gate lagi biar tidak muter
+        if (!$bookingId) {
+            try {
+                $gateResponse = Http::timeout(3)->post('http://127.0.0.1:8004/api/tickets/validate', [
+                    'ticket_code' => $request->ticket_code,
+                ]);
+                $gateData = $gateResponse->json();
+                if (!($gateData['success'] ?? false)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Tiket tidak valid: ' . ($gateData['message'] ?? 'Ditolak Gate'),
+                    ], 400);
+                }
+                $bookingId = $gateData['data']['booking_id'] ?? null;
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gate Service tidak dapat dihubungi: ' . $e->getMessage(),
+                ], 503);
+            }
         }
 
+        if (!$bookingId) {
+            return response()->json(['success' => false, 'message' => 'booking_id tidak ditemukan.'], 400);
+        }
+
+        // Lokasi pertama HARUS Basecamp, bukan kosong
         $tracking = Tracking::create([
-            'booking_id' => $gateData['data']['booking_id'],
+            'booking_id' => $bookingId,
             'ticket_code' => $request->ticket_code,
             'status' => 'CHECKED_IN',
             'checked_in_at' => Carbon::now(),
+            'last_latitude' => $request->latitude ?? '-7.4512',
+            'last_longitude' => $request->longitude ?? '110.4213',
+            'last_location_note' => $request->location_name ?? $request->location_note ?? 'Basecamp Selo - Check-in',
         ]);
 
         return response()->json([
@@ -87,15 +96,7 @@ class TrackingController extends Controller
             return response()->json(['success' => false, 'message' => "Tidak bisa check-out. Status: {$tracking->status}"], 400);
         }
 
-        // Update Gate juga
-        try {
-            Http::timeout(3)->post('http://127.0.0.1:8004/api/tickets/check-out', [
-                'ticket_code' => $request->ticket_code,
-            ]);
-        } catch (\Exception $e) {
-            // Lanjut saja
-        }
-
+        // Tidak manggil Gate lagi, Gate yang manggil ke sini. Biar tidak muter.
         $tracking->update([
             'status' => 'CHECKED_OUT',
             'checked_out_at' => Carbon::now(),
@@ -112,6 +113,7 @@ class TrackingController extends Controller
             'latitude' => 'nullable|string',
             'longitude' => 'nullable|string',
             'location_note' => 'nullable|string',
+            'location_name' => 'nullable|string',
         ]);
 
         $tracking = Tracking::where('ticket_code', $request->ticket_code)->first();
@@ -120,11 +122,14 @@ class TrackingController extends Controller
             return response()->json(['success' => false, 'message' => 'Data tracking tidak ditemukan.'], 404);
         }
 
+        // Terima location_name dan location_note dua-duanya, biar Postman yang kirim location_name tetap masuk
+        $note = $request->location_note ?? $request->location_name ?? $tracking->last_location_note;
+
         $tracking->update([
             'status' => 'ON_TRACK',
-            'last_latitude' => $request->latitude,
-            'last_longitude' => $request->longitude,
-            'last_location_note' => $request->location_note,
+            'last_latitude' => $request->latitude ?? $tracking->last_latitude,
+            'last_longitude' => $request->longitude ?? $tracking->last_longitude,
+            'last_location_note' => $note,
         ]);
 
         return response()->json(['success' => true, 'message' => 'Lokasi berhasil diperbarui.', 'data' => $tracking], 200);

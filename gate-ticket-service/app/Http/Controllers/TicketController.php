@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
@@ -14,6 +16,18 @@ class TicketController extends Controller
     // Endpoint ini sengaja tanpa auth user, karena ini jalur antar-service
     public function confirm(Request $request)
     {
+        // Fault Injection latency 5 detik dan HTTP 500
+        $fault = Cache::get('fault_injection');
+        if ($fault === 'latency') {
+            sleep(5); // Artificial Latency 5 detik
+        }
+        if ($fault === 'error') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fault Injection: HTTP 500 Internal Server Error',
+            ], 500);
+        }
+
         $request->validate([
             'booking_id' => 'required|integer',
             'payment_id' => 'required|integer',
@@ -99,6 +113,27 @@ class TicketController extends Controller
             'checked_in_at' => Carbon::now(),
         ]);
 
+        // KIRIM DATA YANG SAMA KE TRACKING + LOKASI PERTAMA BASECAMP
+        // Ini yang awal kamu bilang: check-in valid di Gate, data dikirim ke Tracking
+        try {
+            $trackingResponse = Http::timeout(5)->post(
+                env('TRACKING_SERVICE_URL', 'http://127.0.0.1:8003') . '/api/tracking/check-in',
+                [
+                    'booking_id' => $ticket->booking_id,
+                    'ticket_code' => $ticket->ticket_code,
+                    'latitude' => '-7.4512',
+                    'longitude' => '110.4213',
+                    'location_name' => 'Basecamp Selo - Check-in',
+                ]
+            );
+
+            if ($trackingResponse->failed()) {
+                Log::warning('Tracking gagal untuk tiket ' . $ticket->ticket_code . ': ' . $trackingResponse->body());
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Gagal buat tracking otomatis untuk tiket ' . $ticket->ticket_code . ': ' . $e->getMessage());
+        }
+
         return response()->json(['success' => true, 'message' => 'Check-in berhasil.', 'data' => $ticket], 200);
     }
 
@@ -122,6 +157,18 @@ class TicketController extends Controller
             'status' => 'CHECKED_OUT',
             'checked_out_at' => Carbon::now(),
         ]);
+
+        // Kasih tahu Tracking juga, biar tracking ikut CHECKED_OUT
+        try {
+            Http::timeout(3)->post(
+                env('TRACKING_SERVICE_URL', 'http://127.0.0.1:8003') . '/api/tracking/check-out',
+                [
+                    'ticket_code' => $ticket->ticket_code,
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Gagal update tracking check-out untuk ' . $ticket->ticket_code . ': ' . $e->getMessage());
+        }
 
         return response()->json(['success' => true, 'message' => 'Check-out berhasil.', 'data' => $ticket], 200);
     }

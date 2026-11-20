@@ -4,6 +4,7 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Services\CircuitBreaker;
+use App\Http\Controllers\CircuitBreakerController;
 
 Route::get('/health', function () {
     return response()->json([
@@ -36,6 +37,9 @@ Route::post('/circuit-breaker/reset', function () {
     $cb->reset();
     return response()->json(['success' => true, 'message' => 'Circuit Breaker di-reset ke CLOSED']);
 });
+
+Route::get('/circuit/status', [CircuitBreakerController::class, 'status']);
+Route::post('/circuit/reset', [CircuitBreakerController::class, 'reset']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

@@ -8,8 +8,9 @@ use Carbon\Carbon;
 class CircuitBreaker
 {
     protected string $key;
-    protected int $failureThreshold = 3; // sesuai diagram: maksimal 3 kegagalan
-    protected int $resetTimeout = 30; // 30 detik untuk test HALF-OPEN, biar tidak kelamaan nunggu
+    protected int $windowSize = 10; // sliding window 10 requests
+    protected int $failureThreshold = 5; // 50% dari 10 = 5 gagal
+    protected int $resetTimeout = 30; // OPEN 30 detik
 
     public function __construct(string $key = 'gate')
     {
@@ -20,7 +21,7 @@ class CircuitBreaker
     {
         return Cache::get($this->key, [
             'state' => 'CLOSED',
-            'failures' => 0,
+            'window' => [], // Isi: array true = sukses, false = gagal, maks 10 terakhir
             'open_until' => null,
         ]);
     }
@@ -30,65 +31,93 @@ class CircuitBreaker
         return $this->getState()['state'];
     }
 
-    // Cek boleh request atau harus Fail Fast
+    public function getFailureCount(): int
+    {
+        $window = $this->getState()['window'] ?? [];
+        return count(array_filter($window, fn($v) => $v === false));
+    }
+
+    public function getFailureRate(): float
+    {
+        $window = $this->getState()['window'] ?? [];
+        if (count($window) === 0) return 0;
+        return $this->getFailureCount() / count($window) * 100;
+    }
+
     public function canAttempt(): bool
     {
         $state = $this->getState();
 
-        if ($state['state'] === 'CLOSED') {
-            return true;
-        }
+        if ($state['state'] === 'CLOSED') return true;
 
         if ($state['state'] === 'OPEN') {
-            // Kalau sudah lewat waktu tunggu, ubah jadi HALF-OPEN dan boleh test 1 request
             if ($state['open_until'] && Carbon::now()->greaterThanOrEqualTo(Carbon::parse($state['open_until']))) {
-                $this->setState('HALF_OPEN', $state['failures']);
+                $this->setState('HALF_OPEN', $state['window'] ?? []);
                 return true;
             }
-            // Masih OPEN, harus Fail Fast
             return false;
         }
 
-        // HALF_OPEN boleh 1 request pengujian
-        return true;
+        return true; // HALF_OPEN boleh 1 probe
     }
 
     public function recordSuccess(): void
     {
-        // HALF_OPEN yang sukses jadi CLOSED, sesuai diagram
-        $this->setState('CLOSED', 0);
+        $state = $this->getState();
+        $window = $state['window'] ?? [];
+        $window[] = true;
+        $window = array_slice($window, -$this->windowSize);
+
+        // HALF_OPEN sukses -> CLOSED, window di-reset
+        if ($state['state'] === 'HALF_OPEN') {
+            $this->setState('CLOSED', []);
+            return;
+        }
+
+        $this->saveWindow($window, 'CLOSED');
     }
 
     public function recordFailure(): void
     {
         $state = $this->getState();
-        $failures = $state['failures'] + 1;
+        $window = $state['window'] ?? [];
+        $window[] = false;
+        $window = array_slice($window, -$this->windowSize);
+        $failures = count(array_filter($window, fn($v) => $v === false));
 
-        // Kalau HALF_OPEN gagal, langsung balik OPEN
+        // HALF_OPEN gagal -> langsung OPEN lagi
         if ($state['state'] === 'HALF_OPEN') {
-            $this->setState('OPEN', $failures);
+            $this->setState('OPEN', $window);
             return;
         }
 
-        // Kalau sudah 3 kegagalan berturut-turut, ubah jadi OPEN
+        // Sesuai skripsi: 5 gagal dalam sliding window 10 -> OPEN
         if ($failures >= $this->failureThreshold) {
-            $this->setState('OPEN', $failures);
+            $this->setState('OPEN', $window);
         } else {
-            $this->setState('CLOSED', $failures);
+            $this->saveWindow($window, 'CLOSED');
         }
     }
 
-    protected function setState(string $state, int $failures): void
+    protected function setState(string $state, array $window): void
     {
         $openUntil = null;
         if ($state === 'OPEN') {
             $openUntil = Carbon::now()->addSeconds($this->resetTimeout)->toDateTimeString();
         }
-
         Cache::put($this->key, [
             'state' => $state,
-            'failures' => $failures,
+            'window' => $window,
             'open_until' => $openUntil,
+        ], 3600);
+    }
+
+    protected function saveWindow(array $window, string $state): void
+    {
+        Cache::put($this->key, [
+            'state' => $state,
+            'window' => $window,
+            'open_until' => null,
         ], 3600);
     }
 

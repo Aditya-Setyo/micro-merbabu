@@ -228,7 +228,7 @@ class PaymentController extends Controller
                 $circuit->recordFailure();
 
                 if ($attempt < $maxAttempts) {
-                    sleep(1);
+                    sleep(5); // 5 detik jeda
                     continue;
                 }
             }
