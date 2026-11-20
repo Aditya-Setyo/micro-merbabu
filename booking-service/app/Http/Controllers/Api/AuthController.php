@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -38,8 +38,12 @@ class AuthController extends Controller
             'address' => 'required|string',
         ]);
 
-        $path = $request->file('identity_file')
-            ->store('identities', 'local');
+        $path = $request->file('identity_file')->store('identities', 'local');
+
+        // Bikin ID_Code otomatis, misal MB-XXXXXX, unik
+        do {
+            $idCode = 'MB-' . Str::upper(Str::random(6));
+        } while (User::where('id_code', $idCode)->exists());
 
         try {
             $user = User::create([
@@ -47,6 +51,7 @@ class AuthController extends Controller
                 'username' => $validated['username'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
+                'id_code' => $idCode,
                 'nik' => $validated['nik'],
                 'identity_type' => 'KTP',
                 'identity_file' => $path,
@@ -71,17 +76,17 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Registrasi berhasil. Silakan menunggu verifikasi petugas pada jam kerja pukul 08.00–16.00 WIB.',
+            'message' => 'Registrasi berhasil. Simpan ID_Code kamu untuk booking rombongan.',
             'data' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'username' => $user->username,
                 'email' => $user->email,
+                'id_code' => $user->id_code,
                 'verification_status' => $user->verification_status,
             ],
         ], 201);
     }
-
 
     public function login(Request $request)
     {

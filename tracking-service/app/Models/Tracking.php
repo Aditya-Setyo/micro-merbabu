@@ -18,6 +18,9 @@ class Tracking extends Model
         'last_latitude',
         'last_longitude',
         'last_location_note',
+        'hiker_code',
+        'member_name',
+        'gelang_id',
     ];
 
     protected $casts = [
