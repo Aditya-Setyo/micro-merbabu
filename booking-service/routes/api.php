@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::post('/bookings/lookup-members', [BookingController::class, 'lookupMembers']);
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
+    Route::get('/users/by-id-code/{id_code}', [AuthController::class, 'byIdCode']);
 });

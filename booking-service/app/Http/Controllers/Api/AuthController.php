@@ -138,6 +138,56 @@ class AuthController extends Controller
         ]);
     }
 
+    // =====================================================
+    // BARU: CARI USER VIA ID_Code UNTUK BOOKING ROMBONGAN
+    // Dipakai frontend BookingPage: GET /api/users/by-id-code/{id_code}
+    // Ketua ketik ID_Code anggota, backend ambil data dari registrasi
+    // =====================================================
+    public function byIdCode($id_code)
+    {
+        // ID_Code di DB kamu: id_code, format MB-XXXXXX (6 karakter random)
+        // Trim + uppercase biar MB-abc123 tetap ketemu MB-ABC123
+        $code = strtoupper(trim($id_code));
+
+        $user = User::where('id_code', $code)->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'ID_Code tidak ditemukan di data registrasi. Cek lagi ID_Code anggota.'
+            ], 404);
+        }
+
+        // Hanya yang sudah VERIFIED yang boleh ikut rombongan
+        // Kalau masih PENDING, tolak biar tidak lolos ke booking
+        if ($user->verification_status !== 'VERIFIED') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Akun dengan ID_Code ini belum diverifikasi petugas.'
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'username' => $user->username,
+                'email' => $user->email,
+                'id_code' => $user->id_code,
+                'nik' => $user->nik,
+                'phone' => $user->phone,
+                'emergency_phone' => $user->emergency_phone,
+                'address' => $user->address,
+                'birth_date' => $user->birth_date,
+                'gender' => $user->gender,
+                'weight' => $user->weight,
+                'height' => $user->height,
+                'verification_status' => $user->verification_status,
+            ]
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
