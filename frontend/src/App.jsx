@@ -9,6 +9,10 @@ import Register from './pages/Register'
 import Quota from './pages/Quota'
 import BookingPage from './pages/Booking'
 import BookingSuccess from './pages/BookingSuccess'
+import Panduan from './pages/Panduan'
+import SOP from './pages/SOP'
+import Berita from './pages/Berita'
+
 
 function App() {
     return (
@@ -24,6 +28,9 @@ function App() {
                 <Route path="/kuota" element={<Quota />} />
                 <Route path="/booking" element={<BookingPage />} />
                 <Route path="/booking/berhasil/:id" element={<BookingSuccess />} />
+                <Route path="/panduan" element={<Panduan />} />
+                <Route path="/sop" element={<SOP />} />
+                <Route path="/berita" element={<Berita />} />
             </Routes>
         </BrowserRouter>
     )
