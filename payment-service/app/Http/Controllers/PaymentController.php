@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Services\CircuitBreaker;
+use App\Services\RetryMechanism;
+use Exception;
 
 class PaymentController extends Controller
 {
@@ -35,7 +37,6 @@ class PaymentController extends Controller
         $bookingId = $request->booking_id;
         $token = $request->header('Authorization');
 
-        // Panggil endpoint booking yang SUDAH ADA, sambil teruskan token
         $bookingResponse = Http::withHeaders([
             'Authorization' => $token,
             'Accept' => 'application/json',
@@ -163,7 +164,6 @@ class PaymentController extends Controller
             'va_number' => 'required|string',
         ]);
 
-        // 1. Ini yang kemarin hilang, ini yang bikin $payment ada
         $payment = Payment::where('va_number', $request->va_number)->first();
 
         if (!$payment) {
@@ -182,11 +182,10 @@ class PaymentController extends Controller
         }
 
         $payment->update(['status' => 'SUCCESS']);
-
-        // 2. Retry + Circuit Breaker untuk Gate
         $circuit = new CircuitBreaker('gate');
+        $retry = new RetryMechanism();
 
-        // Cek Circuit Breaker, kalau OPEN langsung Fail Fast
+        // Cek Circuit Breaker dulu, kalau OPEN langsung Fail Fast
         if (!$circuit->canAttempt()) {
             return response()->json([
                 'success' => true,
@@ -201,37 +200,41 @@ class PaymentController extends Controller
         }
 
         $isHalfOpen = $circuit->getStateName() === 'HALF_OPEN';
-        $maxAttempts = $isHalfOpen ? 1 : 3;
+        $maxAttempts = $isHalfOpen ? 1 : 3; // HALF_OPEN cuma 1 probe, CLOSED 3x
         $gateUrl = "http://127.0.0.1:8004/api/tickets/confirm";
         $gateData = null;
         $lastError = null;
-        $attempt = 1;
+        $attemptsUsed = 0;
 
-        // Retry Mechanism, maksimal 3 percobaan
-        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
-            try {
-                $gateResponse = Http::timeout(3)->post($gateUrl, [
-                    'booking_id' => $payment->booking_id,
-                    'payment_id' => $payment->id,
-                    'status' => 'PAID',
-                ]);
+        try {
+            $gateData = $retry->execute(
+                function ($attempt) use ($gateUrl, $payment, &$attemptsUsed) {
+                    $attemptsUsed = $attempt;
+                    $gateResponse = Http::timeout(3)->post($gateUrl, [
+                        'booking_id' => $payment->booking_id,
+                        'payment_id' => $payment->id,
+                        'status' => 'PAID',
+                    ]);
 
-                if ($gateResponse->successful()) {
-                    $gateData = $gateResponse->json() ?? $gateResponse->body();
-                    $circuit->recordSuccess();
-                    break;
+                    if ($gateResponse->successful()) {
+                        return $gateResponse->json() ?? $gateResponse->body();
+                    }
+
+                    throw new Exception('Gate balas HTTP ' . $gateResponse->status());
+                },
+                $maxAttempts,
+                5, // jeda 5 detik sesuai Bab 3
+                function ($attempt, $e) use ($circuit) {
+                    // Setiap gagal, catat ke Circuit Breaker
+                    $circuit->recordFailure();
                 }
+            );
 
-                throw new \Exception('Gate balas HTTP ' . $gateResponse->status());
-            } catch (\Exception $e) {
-                $lastError = $e->getMessage();
-                $circuit->recordFailure();
-
-                if ($attempt < $maxAttempts) {
-                    sleep(5); // 5 detik jeda
-                    continue;
-                }
-            }
+            // Kalau sukses, catat sukses ke Circuit Breaker
+            $circuit->recordSuccess();
+        } catch (Exception $e) {
+            $lastError = $e->getMessage();
+            // $gateData tetap null, akan masuk ke blok gagal di bawah
         }
 
         // Kalau semua retry gagal
@@ -259,7 +262,7 @@ class PaymentController extends Controller
             'payment_details' => $payment,
             'circuit_breaker' => [
                 'state' => $circuit->getStateName(),
-                'attempts' => $attempt,
+                'attempts' => $attemptsUsed,
             ],
             'gate_service_response' => $gateData,
         ], 200);

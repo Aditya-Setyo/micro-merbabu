@@ -91,7 +91,6 @@ class CircuitBreaker
             return;
         }
 
-        // Sesuai skripsi: 5 gagal dalam sliding window 10 -> OPEN
         if ($failures >= $this->failureThreshold) {
             $this->setState('OPEN', $window);
         } else {
