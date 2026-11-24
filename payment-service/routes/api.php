@@ -22,6 +22,7 @@ Route::prefix('payments')->group(function () {
     Route::post('/send-otp', [PaymentController::class, 'sendOtp']);
     Route::post('/verify-otp', [PaymentController::class, 'verifyOtp']);
     Route::post('/pay-va', [PaymentController::class, 'payVa']);
+    Route::post('/pay-va-baseline', [PaymentController::class, 'payVaBaseline']);
 });
 
 Route::get('/circuit-breaker/status', function () {

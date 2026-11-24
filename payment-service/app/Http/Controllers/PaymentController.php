@@ -267,4 +267,23 @@ class PaymentController extends Controller
             'gate_service_response' => $gateData,
         ], 200);
     }
+    public function payVaBaseline(Request $request)
+    {
+        $va = $request->input('va_number') ?? $request->input('virtual_account');
+
+        $payment = Payment::where('va_number', $va)->first();
+
+        if (!$payment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment tidak ditemukan.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => '[Baseline] OK',
+            'payment_id' => $payment->id,
+        ], 200);
+    }
 }

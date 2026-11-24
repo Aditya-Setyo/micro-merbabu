@@ -1,0 +1,2 @@
+﻿"Tanggal","Skenario","Fault","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput"
+"2026-11-24 20:35:44","Slow","latency","Slow-proposed-VU100-Run3","proposed","100","3","pay-va","100","0","100","0","10028.6","10002","10005","10254","10278","1","100"

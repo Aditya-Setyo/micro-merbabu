@@ -1,0 +1,30 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Failure-proposed-VU10-Run2
+Tanggal   : 2026-11-24 20:48:17
+Skenario  : Failure - Fault error NYALA selama sesi
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 1 detik
+Throughput: 100 req/detik
+
+HASIL
+
+Total     : 100
+Sukses    : 70
+Gagal     : 30
+Rate      : 70 %
+Avg       : 6814.6 ms
+Min       : 4510 ms
+P50       : 5285 ms
+P95       : 10005 ms
+Max       : 10100 ms
+
+FILE
+
+DATA mentah : DATA-Failure-proposed-VU10-Run2-20261124-204817.jtl
+Log JMeter : LOG-Failure-proposed-VU10-Run2-20261124-204817.log
+Data VA    : VA-Failure-proposed-VU10-Run2-20261124-204817.csv

@@ -1,0 +1,30 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Slow-proposed-VU10-Run2
+Tanggal   : 2026-11-24 19:43:50
+Skenario  : Slow - Fault latency NYALA selama sesi
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 1 detik
+Throughput: 100 req/detik
+
+HASIL
+
+Total     : 100
+Sukses    : 40
+Gagal     : 60
+Rate      : 40 %
+Avg       : 8348.5 ms
+Min       : 4414 ms
+P50       : 10003 ms
+P95       : 10006 ms
+Max       : 10060 ms
+
+FILE
+
+DATA mentah : DATA-Slow-proposed-VU10-Run2-20261124-194350.jtl
+Log JMeter : LOG-Slow-proposed-VU10-Run2-20261124-194350.log
+Data VA    : VA-Slow-proposed-VU10-Run2-20261124-194350.csv

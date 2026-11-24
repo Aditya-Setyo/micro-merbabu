@@ -1,0 +1,28 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Normal-baseline-VU10-Run1
+Tanggal   : 2026-11-24 18:32:41
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 0 detik
+
+HASIL
+
+Total     : 100
+Sukses    : 95
+Gagal     : 5
+Rate      : 95 %
+Avg       : 5502.8 ms
+Min       : 1487 ms
+P50       : 5089 ms
+P95       : 10003 ms
+Max       : 10009 ms
+
+FILE
+
+DATA mentah : DATA-Normal-baseline-VU10-Run1-20261124-183241.jtl
+Log JMeter : LOG-Normal-baseline-VU10-Run1-20261124-183241.log
+Data VA    : VA-Normal-baseline-VU10-Run1-20261124-183241.csv

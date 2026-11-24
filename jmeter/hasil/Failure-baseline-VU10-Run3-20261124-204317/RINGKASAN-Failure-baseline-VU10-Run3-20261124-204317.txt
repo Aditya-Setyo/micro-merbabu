@@ -1,0 +1,30 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Failure-baseline-VU10-Run3
+Tanggal   : 2026-11-24 20:43:17
+Skenario  : Failure - Fault error NYALA selama sesi
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 1 detik
+Throughput: 100 req/detik
+
+HASIL
+
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 4395.8 ms
+Min       : 573 ms
+P50       : 4645 ms
+P95       : 6039 ms
+Max       : 6659 ms
+
+FILE
+
+DATA mentah : DATA-Failure-baseline-VU10-Run3-20261124-204317.jtl
+Log JMeter : LOG-Failure-baseline-VU10-Run3-20261124-204317.log
+Data VA    : VA-Failure-baseline-VU10-Run3-20261124-204317.csv
