@@ -12,20 +12,30 @@ use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
-    // Dipanggil Payment Service setelah payVa berhasil
-    // Endpoint ini sengaja tanpa auth user, karena ini jalur antar-service
+
     public function confirm(Request $request)
     {
-        // Fault Injection latency 5 detik dan HTTP 500
+        // Fault Injection - SEKARANG 30% ACAK, BUKAN 100% PERMANEN
         $fault = Cache::get('fault_injection');
+
         if ($fault === 'latency') {
-            sleep(5); // Artificial Latency 5 detik
+            // Cuma 30% request yang kena lambat, 70% lolos normal
+            // Sleep 2 detik aja, jangan 5 detik, biar nggak kalah sama timeout Payment (3 detik)
+            if (rand(1, 100) <= 30) {
+                sleep(2);
+            }
         }
+
         if ($fault === 'error') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Fault Injection: HTTP 500 Internal Server Error',
-            ], 500);
+            // Cuma 30% yang dibalikin 500, 70% lolos normal
+            // Di sinilah Retry bisa nyelametin
+            if (rand(1, 100) <= 30) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Fault Injection: HTTP 500 Internal Server Error (30%)',
+                ], 500);
+            }
+            // Kalau nggak kena undian 30%, lanjut ke bawah normal
         }
 
         $request->validate([
@@ -60,6 +70,54 @@ class TicketController extends Controller
             'data' => $ticket
         ], 201);
     }
+    // Dipanggil Payment Service setelah payVa berhasil
+    // // Endpoint ini sengaja tanpa auth user, karena ini jalur antar-service
+    // public function confirm(Request $request)
+    // {
+    //     // Fault Injection latency 5 detik dan HTTP 500
+    //     $fault = Cache::get('fault_injection');
+    //     if ($fault === 'latency') {
+    //         sleep(5); // Artificial Latency 5 detik
+    //     }
+    //     if ($fault === 'error') {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Fault Injection: HTTP 500 Internal Server Error',
+    //         ], 500);
+    //     }
+
+    //     $request->validate([
+    //         'booking_id' => 'required|integer',
+    //         'payment_id' => 'required|integer',
+    //         'status' => 'required|string',
+    //     ]);
+
+    //     // Kalau tiket sudah pernah dibuat, jangan duplikat
+    //     $existing = Ticket::where('booking_id', $request->booking_id)->first();
+    //     if ($existing) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Tiket sudah pernah diterbitkan.',
+    //             'data' => $existing
+    //         ], 200);
+    //     }
+
+    //     $ticketCode = 'TKT-' . Str::upper(Str::random(8));
+
+    //     $ticket = Ticket::create([
+    //         'booking_id' => $request->booking_id,
+    //         'payment_id' => $request->payment_id,
+    //         'ticket_code' => $ticketCode,
+    //         'booking_code' => $request->booking_code ?? null,
+    //         'status' => 'ACTIVE',
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Tiket berhasil diterbitkan.',
+    //         'data' => $ticket
+    //     ], 201);
+    // }
 
     // Dipakai Petugas Basecamp untuk validasi, sesuai sequence diagram check-in
     public function validateTicket(Request $request)

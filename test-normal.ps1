@@ -1,6 +1,6 @@
-$vu = 100 # <-- GANTI: 10 / 25 / 50 / 100
+$vu = 10 # <-- GANTI: 10 / 25 / 50 / 100
 $mode = "proposed"    # <-- GANTI: "baseline" atau "proposed"
-$ulang = 3 # <-- GANTI: 1 / 2 / 3
+$ulang = 1 # <-- GANTI: 1 / 2 / 3
 # ============================================================
 
 $ErrorActionPreference = "Continue"
@@ -36,33 +36,31 @@ try {
   Write-Host "Service jalan"
 } catch { Write-Host "Service belum jalan, jalanin dulu 4 service"; exit }
 
-# 3. Reset
+# 3. Reset - FIX: pakai BKG- (id 141-240), bukan 4-13
 Write-Host "Reset..."
-Jalankan-Mysql "USE ticket_db; DELETE FROM tickets WHERE booking_id IN (4,5,6,7,8,9,10,11,12,13);"
+# Balikin 100 payments BKG- jadi PENDING (datanya udah bener di DB, jangan INSERT baru)
+Jalankan-Mysql "USE payment_db; UPDATE payments SET status='PENDING' WHERE booking_id IN (SELECT id FROM booking_db.bookings WHERE booking_code LIKE 'BKG-%');"
+# Hapus tiket BKG- dari run sebelumnya
+Jalankan-Mysql "USE ticket_db; DELETE FROM tickets WHERE booking_id IN (SELECT id FROM booking_db.bookings WHERE booking_code LIKE 'BKG-%');"
 try { Invoke-RestMethod -Uri "http://127.0.0.1:8002/api/circuit/reset" -Method POST | Out-Null } catch {}
 try { Invoke-RestMethod -Uri "http://127.0.0.1:8004/api/fault-inject/disable" -Method POST | Out-Null } catch {}
 Start-Sleep -Seconds 1
 
-# 4. Bikin 100 VA baru
-$modeHuruf = if ($mode -eq "baseline") { "B" } else { "P" }
-$prefix6 = "88" + $vu.ToString("00") + $ulang + $modeHuruf
+# 4. Ambil 100 VA DARI DATABASE 
+# VA di DB udah bener: 8800 + booking_id, contoh 8800000141 - 8800000240
 $csvPath = ((Get-Location).Path + "\" + $folderHasil + "\VA-" + $namaFile + ".csv") -replace '\\','/'
 $sqlPath = "$folderHasil\VA-$namaFile.sql"
-$vas = @()
-$values = @()
-for ($i=1; $i -le $jumlahPerSesi; $i++) {
-  $va = "$prefix6" + $i.ToString("0000")
-  $vas += $va
-  $bookingId = 4 + (($i - 1) % 10)
-  $values += "($bookingId, '$va', (SELECT total_price FROM booking_db.bookings WHERE id = $bookingId), 'PENDING', NOW(), NOW())"
+# Simpan query-nya aja buat bukti, bukan INSERT yang bikin VA ngawur
+"USE payment_db; SELECT va_number FROM payments WHERE booking_id IN (SELECT id FROM booking_db.bookings WHERE booking_code LIKE 'BKG-%') ORDER BY booking_id;" | Out-File -FilePath $sqlPath -Encoding utf8
+# Generate CSV langsung dari DB
+mysql -u $mysqlUser -N -e "USE payment_db; SELECT va_number FROM payments WHERE booking_id IN (SELECT id FROM booking_db.bookings WHERE booking_code LIKE 'BKG-%') ORDER BY booking_id;" | Out-File -FilePath $csvPath -Encoding ascii
+# Cek: harusnya 100 baris, pertama 8800000141
+$vasCek = Get-Content $csvPath
+Write-Host "VA jadi: $csvPath ($($vasCek.Count) baris, pertama: $($vasCek[0]))"
+if ($vasCek.Count -ne 100 -or $vasCek[0] -ne "8800000141") {
+  Write-Host "[GAGAL] VA dari DB tidak bener! Harusnya 100 baris mulai 8800000141. Cek DB dulu." -ForegroundColor Red
+  exit
 }
-$sql = "USE payment_db; DELETE FROM payments WHERE va_number LIKE '$prefix6%';`n"
-$sql += "INSERT INTO payments (booking_id, va_number, amount, status, created_at, updated_at) VALUES `n"
-$sql += ($values -join ",`n") + ";"
-$sql | Out-File -FilePath $sqlPath -Encoding utf8
-Get-Content $sqlPath | mysql -u $mysqlUser
-$vas | Out-File -FilePath $csvPath -Encoding utf8
-Write-Host "VA jadi: $csvPath"
 
 # 5. Jalanin JMeter 1 sesi
 Write-Host "===== Jalanin JMeter: $nama - VU $vu - Loops $loops - Endpoint $endpoint ====="
@@ -86,7 +84,10 @@ if (Test-Path $jtl) {
   if ($p95Index -ge $elapsed.Count) { $p95Index = $elapsed.Count - 1 }
   $p95 = $elapsed[$p95Index]
   $p50 = $elapsed[[math]::Floor($elapsed.Count * 0.5)]
-  $durasi = [math]::Round((($maxStamp + $maxElapsed - $minStamp) / 1000), 1)
+  # FIX Durasi: pakai Min/Max timeStamp + elapsed, bukan variabel $maxStamp yang nggak ada
+  $minStamp = ($data.timeStamp | ForEach-Object { [long]$_ } | Measure-Object -Minimum).Minimum
+  $maxEnd = ($data | ForEach-Object { [long]$_.timeStamp + [long]$_.elapsed } | Measure-Object -Maximum).Maximum
+  $durasi = [math]::Round((($maxEnd - $minStamp) / 1000), 1)
 
   # --- TERMINAL ---
   Write-Host ""

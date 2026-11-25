@@ -160,6 +160,8 @@ class PaymentController extends Controller
 
     public function payVa(Request $request)
     {
+        \Log::info('DEBUG PAYVA RAW=[' . $request->getContent() . '] ALL=' . json_encode($request->all()));
+        
         $request->validate([
             'va_number' => 'required|string',
         ]);
@@ -173,15 +175,14 @@ class PaymentController extends Controller
             ], 404);
         }
 
-        if ($payment->status === 'SUCCESS') {
-            return response()->json([
-                'success' => true,
-                'message' => 'Pembayaran untuk VA ini sudah berhasil sebelumnya.',
-                'payment_details' => $payment,
-            ], 200);
+        // FIX 1: JANGAN RETURN DULUAN KALAU SUDAH SUCCESS
+        // Kalau return duluan, Gate nggak pernah dipanggil di pengujian ulang (VA dipakai berulang)
+        // Kita tetap lanjut ke Gate, karena Gate sudah idempotent (cek existing by booking_id)
+        $alreadySuccess = ($payment->status === 'SUCCESS');
+        if (!$alreadySuccess) {
+            $payment->update(['status' => 'SUCCESS']);
         }
 
-        $payment->update(['status' => 'SUCCESS']);
         $circuit = new CircuitBreaker('gate');
         $retry = new RetryMechanism();
 
@@ -200,7 +201,7 @@ class PaymentController extends Controller
         }
 
         $isHalfOpen = $circuit->getStateName() === 'HALF_OPEN';
-        $maxAttempts = $isHalfOpen ? 1 : 3; // HALF_OPEN cuma 1 probe, CLOSED 3x
+        $maxAttempts = $isHalfOpen ? 1 : 3;
         $gateUrl = "http://127.0.0.1:8004/api/tickets/confirm";
         $gateData = null;
         $lastError = null;
@@ -210,6 +211,7 @@ class PaymentController extends Controller
             $gateData = $retry->execute(
                 function ($attempt) use ($gateUrl, $payment, &$attemptsUsed) {
                     $attemptsUsed = $attempt;
+                    // Timeout per attempt tetap 3 detik
                     $gateResponse = Http::timeout(3)->post($gateUrl, [
                         'booking_id' => $payment->booking_id,
                         'payment_id' => $payment->id,
@@ -223,21 +225,17 @@ class PaymentController extends Controller
                     throw new Exception('Gate balas HTTP ' . $gateResponse->status());
                 },
                 $maxAttempts,
-                5, // jeda 5 detik sesuai Bab 3
+                1, // FIX 2: Jeda retry dari 5 detik -> 1 detik (sesuai Bab 3 baru)
                 function ($attempt, $e) use ($circuit) {
-                    // Setiap gagal, catat ke Circuit Breaker
                     $circuit->recordFailure();
                 }
             );
 
-            // Kalau sukses, catat sukses ke Circuit Breaker
             $circuit->recordSuccess();
         } catch (Exception $e) {
             $lastError = $e->getMessage();
-            // $gateData tetap null, akan masuk ke blok gagal di bawah
         }
 
-        // Kalau semua retry gagal
         if ($gateData === null) {
             return response()->json([
                 'success' => true,
@@ -255,7 +253,6 @@ class PaymentController extends Controller
             ], 200);
         }
 
-        // Kalau sukses
         return response()->json([
             'success' => true,
             'message' => 'Pembayaran Virtual Account berhasil diproses.',
@@ -267,6 +264,7 @@ class PaymentController extends Controller
             'gate_service_response' => $gateData,
         ], 200);
     }
+
     public function payVaBaseline(Request $request)
     {
         $va = $request->input('va_number') ?? $request->input('virtual_account');
@@ -280,10 +278,162 @@ class PaymentController extends Controller
             ], 404);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => '[Baseline] OK',
-            'payment_id' => $payment->id,
-        ], 200);
+        if ($payment->status !== 'SUCCESS') {
+            $payment->update(['status' => 'SUCCESS']);
+        }
+
+        // FIX BASELINE: Baseline harus tetap manggil Gate 1x tanpa Retry/CB
+        // Kalau Baseline nggak manggil Gate sama sekali, perbandingan tiket jadi nggak adil
+        // Proposed = 3x percobaan + CB, Baseline = 1x percobaan langsung, tanpa Retry/CB
+        try {
+            $gateResponse = Http::timeout(3)->post("http://127.0.0.1:8004/api/tickets/confirm", [
+                'booking_id' => $payment->booking_id,
+                'payment_id' => $payment->id,
+                'status' => 'PAID',
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => '[Baseline] OK',
+                'payment_id' => $payment->id,
+                'gate_service_response' => $gateResponse->json() ?? $gateResponse->body(),
+            ], 200);
+        } catch (\Throwable $e) {
+            // Baseline memang dibiarkan gagal kalau Gate gagal, itu pembandingnya
+            return response()->json([
+                'success' => true,
+                'message' => '[Baseline] OK - Payment sukses, Gate gagal (tanpa retry)',
+                'payment_id' => $payment->id,
+                'gate_service_response' => ['success' => false, 'message' => $e->getMessage()],
+            ], 200);
+        }
     }
+    // public function payVa(Request $request)
+    // {
+    //     $request->validate([
+    //         'va_number' => 'required|string',
+    //     ]);
+
+    //     $payment = Payment::where('va_number', $request->va_number)->first();
+
+    //     if (!$payment) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Payment tidak ditemukan.',
+    //         ], 404);
+    //     }
+
+    //     if ($payment->status === 'SUCCESS') {
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Pembayaran untuk VA ini sudah berhasil sebelumnya.',
+    //             'payment_details' => $payment,
+    //         ], 200);
+    //     }
+
+    //     $payment->update(['status' => 'SUCCESS']);
+    //     $circuit = new CircuitBreaker('gate');
+    //     $retry = new RetryMechanism();
+
+    //     // Cek Circuit Breaker dulu, kalau OPEN langsung Fail Fast
+    //     if (!$circuit->canAttempt()) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Pembayaran berhasil, tapi konfirmasi tiket tertunda. Gate Service sedang OPEN (Fail Fast).',
+    //             'payment_details' => $payment,
+    //             'circuit_breaker' => [
+    //                 'state' => 'OPEN',
+    //                 'message' => 'HTTP 503 Fail Fast',
+    //             ],
+    //             'gate_service_response' => null,
+    //         ], 200);
+    //     }
+
+    //     $isHalfOpen = $circuit->getStateName() === 'HALF_OPEN';
+    //     $maxAttempts = $isHalfOpen ? 1 : 3; // HALF_OPEN cuma 1 probe, CLOSED 3x
+    //     $gateUrl = "http://127.0.0.1:8004/api/tickets/confirm";
+    //     $gateData = null;
+    //     $lastError = null;
+    //     $attemptsUsed = 0;
+
+    //     try {
+    //         $gateData = $retry->execute(
+    //             function ($attempt) use ($gateUrl, $payment, &$attemptsUsed) {
+    //                 $attemptsUsed = $attempt;
+    //                 $gateResponse = Http::timeout(3)->post($gateUrl, [
+    //                     'booking_id' => $payment->booking_id,
+    //                     'payment_id' => $payment->id,
+    //                     'status' => 'PAID',
+    //                 ]);
+
+    //                 if ($gateResponse->successful()) {
+    //                     return $gateResponse->json() ?? $gateResponse->body();
+    //                 }
+
+    //                 throw new Exception('Gate balas HTTP ' . $gateResponse->status());
+    //             },
+    //             $maxAttempts,
+    //             5, // jeda 5 detik sesuai Bab 3
+    //             function ($attempt, $e) use ($circuit) {
+    //                 // Setiap gagal, catat ke Circuit Breaker
+    //                 $circuit->recordFailure();
+    //             }
+    //         );
+
+    //         // Kalau sukses, catat sukses ke Circuit Breaker
+    //         $circuit->recordSuccess();
+    //     } catch (Exception $e) {
+    //         $lastError = $e->getMessage();
+    //         // $gateData tetap null, akan masuk ke blok gagal di bawah
+    //     }
+
+    //     // Kalau semua retry gagal
+    //     if ($gateData === null) {
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Pembayaran berhasil, tapi konfirmasi tiket gagal setelah ' . $maxAttempts . ' percobaan.',
+    //             'payment_details' => $payment,
+    //             'circuit_breaker' => [
+    //                 'state' => $circuit->getStateName(),
+    //                 'attempts' => $maxAttempts,
+    //                 'last_error' => $lastError,
+    //             ],
+    //             'gate_service_response' => [
+    //                 'success' => false,
+    //                 'message' => 'Gate Service tidak dapat dihubungi: ' . $lastError,
+    //             ],
+    //         ], 200);
+    //     }
+
+    //     // Kalau sukses
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Pembayaran Virtual Account berhasil diproses.',
+    //         'payment_details' => $payment,
+    //         'circuit_breaker' => [
+    //             'state' => $circuit->getStateName(),
+    //             'attempts' => $attemptsUsed,
+    //         ],
+    //         'gate_service_response' => $gateData,
+    //     ], 200);
+    // }
+    // public function payVaBaseline(Request $request)
+    // {
+    //     $va = $request->input('va_number') ?? $request->input('virtual_account');
+
+    //     $payment = Payment::where('va_number', $va)->first();
+
+    //     if (!$payment) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Payment tidak ditemukan.',
+    //         ], 404);
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => '[Baseline] OK',
+    //         'payment_id' => $payment->id,
+    //     ], 200);
+    // }
 }
