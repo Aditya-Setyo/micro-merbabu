@@ -1,0 +1,361 @@
+2026-11-25 14:39:46,359 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-11-25 14:39:46,402 INFO o.a.j.JMeter: Loading user properties from: D:\Skripsi\apache-jmeter-5.6.3\bin\user.properties
+2026-11-25 14:39:46,403 INFO o.a.j.JMeter: Loading system properties from: D:\Skripsi\apache-jmeter-5.6.3\bin\system.properties
+2026-11-25 14:39:46,404 INFO o.a.j.JMeter: Setting JMeter property: vu=100
+2026-11-25 14:39:46,404 INFO o.a.j.JMeter: Setting JMeter property: loops=1
+2026-11-25 14:39:46,404 INFO o.a.j.JMeter: Setting JMeter property: vaFile=D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU100-Run1-20261125-143936/VA-Failure-baseline-VU100-Run1-20261125-143936.csv
+2026-11-25 14:39:46,405 INFO o.a.j.JMeter: Setting JMeter property: endpoint=pay-va-baseline
+2026-11-25 14:39:46,423 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-11-25 14:39:46,423 INFO o.a.j.JMeter: Version 5.6.3
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: java.version=25.0.5.1
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: os.name=Windows 11
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: os.arch=amd64
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: os.version=10.0
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-11-25 14:39:46,424 INFO o.a.j.JMeter: java.awt.headless=true
+2026-11-25 14:39:46,425 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-11-25 14:39:46,425 INFO o.a.j.JMeter: Available Processors =4
+2026-11-25 14:39:46,457 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-11-25 14:39:46,457 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-11-25 14:39:46,458 INFO o.a.j.JMeter: JMeterHome=D:\Skripsi\apache-jmeter-5.6.3
+2026-11-25 14:39:46,458 INFO o.a.j.JMeter: user.dir  =D:\Skripsi\BTN Gunung Merbabu\micro-merbabu
+2026-11-25 14:39:46,458 INFO o.a.j.JMeter: PWD       =D:\Skripsi\BTN Gunung Merbabu\micro-merbabu
+2026-11-25 14:39:46,459 INFO o.a.j.JMeter: IP: 192.168.100.75 Name: LAPTOP-EO29SMEQ FullName: LAPTOP-EO29SMEQ
+2026-11-25 14:39:46,497 INFO o.a.j.s.FileServer: Default base='D:\Skripsi\BTN Gunung Merbabu\micro-merbabu'
+2026-11-25 14:39:46,499 INFO o.a.j.s.FileServer: Set new base='D:\Skripsi\BTN Gunung Merbabu\micro-merbabu\jmeter'
+2026-11-25 14:39:47,416 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-11-25 14:39:47,464 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-11-25 14:39:47,471 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-11-25 14:39:47,479 INFO o.a.j.s.SaveService: Loading file: jmeter\payva-test.jmx
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-11-25 14:39:47,584 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-11-25 14:39:47,609 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-11-25 14:39:47,647 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-11-25 14:39:47,648 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-25 14:39:47,648 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-25 14:39:47,657 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-11-25 14:39:47,657 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-11-25 14:39:47,815 INFO o.a.j.JMeter: Running test (1795592387815)
+2026-11-25 14:39:47,850 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Thread Group
+2026-11-25 14:39:47,850 INFO o.a.j.e.StandardJMeterEngine: Starting 100 threads for group Thread Group.
+2026-11-25 14:39:47,850 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-25 14:39:47,850 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=100 ramp-up=5 delayedStart=false
+2026-11-25 14:39:48,059 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-11-25 14:39:48,060 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-11-25 14:39:48,148 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-1
+2026-11-25 14:39:48,151 INFO o.a.j.s.FileServer: Stored: D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU100-Run1-20261125-143936/VA-Failure-baseline-VU100-Run1-20261125-143936.csv
+2026-11-25 14:39:48,176 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-2
+2026-11-25 14:39:48,213 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = LAPTOP-EO29SMEQ
+2026-11-25 14:39:48,233 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-11-25 14:39:48,235 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-11-25 14:39:48,236 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-11-25 14:39:48,236 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-11-25 14:39:48,236 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-11-25 14:39:48,238 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-3
+2026-11-25 14:39:48,283 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-4
+2026-11-25 14:39:48,321 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-5
+2026-11-25 14:39:48,390 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-6
+2026-11-25 14:39:48,433 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-7
+2026-11-25 14:39:48,475 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-8
+2026-11-25 14:39:48,525 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-9
+2026-11-25 14:39:48,568 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-10
+2026-11-25 14:39:48,621 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-11
+2026-11-25 14:39:48,680 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-12
+2026-11-25 14:39:48,723 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-13
+2026-11-25 14:39:48,771 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-14
+2026-11-25 14:39:48,817 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-15
+2026-11-25 14:39:48,877 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-16
+2026-11-25 14:39:48,917 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-17
+2026-11-25 14:39:48,960 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-18
+2026-11-25 14:39:48,998 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-19
+2026-11-25 14:39:49,061 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-20
+2026-11-25 14:39:49,119 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-21
+2026-11-25 14:39:49,164 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-22
+2026-11-25 14:39:49,214 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-23
+2026-11-25 14:39:49,258 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-24
+2026-11-25 14:39:49,317 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-25
+2026-11-25 14:39:49,365 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-26
+2026-11-25 14:39:49,399 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-27
+2026-11-25 14:39:49,451 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-28
+2026-11-25 14:39:49,512 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-29
+2026-11-25 14:39:49,547 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-30
+2026-11-25 14:39:49,593 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-31
+2026-11-25 14:39:49,645 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-1
+2026-11-25 14:39:49,645 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-1
+2026-11-25 14:39:49,651 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-32
+2026-11-25 14:39:49,687 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-33
+2026-11-25 14:39:49,733 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-34
+2026-11-25 14:39:49,797 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-35
+2026-11-25 14:39:49,831 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-36
+2026-11-25 14:39:49,892 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-37
+2026-11-25 14:39:49,930 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-38
+2026-11-25 14:39:49,967 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-39
+2026-11-25 14:39:50,015 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-40
+2026-11-25 14:39:50,066 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-41
+2026-11-25 14:39:50,116 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-42
+2026-11-25 14:39:50,184 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-43
+2026-11-25 14:39:50,252 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-44
+2026-11-25 14:39:50,290 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-45
+2026-11-25 14:39:50,336 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-46
+2026-11-25 14:39:50,360 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-47
+2026-11-25 14:39:50,432 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-48
+2026-11-25 14:39:50,467 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-49
+2026-11-25 14:39:50,526 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-50
+2026-11-25 14:39:50,564 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-51
+2026-11-25 14:39:50,620 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-52
+2026-11-25 14:39:50,652 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-53
+2026-11-25 14:39:50,712 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-54
+2026-11-25 14:39:50,763 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-55
+2026-11-25 14:39:50,818 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-56
+2026-11-25 14:39:50,830 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-5
+2026-11-25 14:39:50,831 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-5
+2026-11-25 14:39:50,868 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-57
+2026-11-25 14:39:50,912 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-58
+2026-11-25 14:39:50,967 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-59
+2026-11-25 14:39:51,017 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-60
+2026-11-25 14:39:51,042 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-61
+2026-11-25 14:39:51,115 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-62
+2026-11-25 14:39:51,165 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-63
+2026-11-25 14:39:51,199 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-64
+2026-11-25 14:39:51,248 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-65
+2026-11-25 14:39:51,301 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-66
+2026-11-25 14:39:51,365 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-67
+2026-11-25 14:39:51,401 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-68
+2026-11-25 14:39:51,463 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-69
+2026-11-25 14:39:51,490 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-70
+2026-11-25 14:39:51,538 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-71
+2026-11-25 14:39:51,598 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-72
+2026-11-25 14:39:51,661 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-73
+2026-11-25 14:39:51,694 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-74
+2026-11-25 14:39:51,764 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-75
+2026-11-25 14:39:51,794 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-76
+2026-11-25 14:39:51,828 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-77
+2026-11-25 14:39:51,831 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-2
+2026-11-25 14:39:51,831 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-2
+2026-11-25 14:39:51,878 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-78
+2026-11-25 14:39:51,900 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-79
+2026-11-25 14:39:51,934 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-81
+2026-11-25 14:39:51,940 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-80
+2026-11-25 14:39:51,982 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-82
+2026-11-25 14:39:52,028 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-83
+2026-11-25 14:39:52,081 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-84
+2026-11-25 14:39:52,121 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-85
+2026-11-25 14:39:52,170 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-86
+2026-11-25 14:39:52,220 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-87
+2026-11-25 14:39:52,271 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-88
+2026-11-25 14:39:52,321 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-89
+2026-11-25 14:39:52,372 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-90
+2026-11-25 14:39:52,421 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-91
+2026-11-25 14:39:52,470 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-92
+2026-11-25 14:39:52,520 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-93
+2026-11-25 14:39:52,572 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-94
+2026-11-25 14:39:52,622 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-95
+2026-11-25 14:39:52,670 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-96
+2026-11-25 14:39:52,718 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-97
+2026-11-25 14:39:52,748 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-6
+2026-11-25 14:39:52,748 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-6
+2026-11-25 14:39:52,773 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-98
+2026-11-25 14:39:52,819 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-99
+2026-11-25 14:39:52,871 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-100
+2026-11-25 14:39:53,601 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-4
+2026-11-25 14:39:53,601 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-4
+2026-11-25 14:39:54,445 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-3
+2026-11-25 14:39:54,445 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-3
+2026-11-25 14:39:55,271 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-7
+2026-11-25 14:39:55,271 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-7
+2026-11-25 14:39:56,143 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-8
+2026-11-25 14:39:56,144 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-8
+2026-11-25 14:39:57,061 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-9
+2026-11-25 14:39:57,062 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-9
+2026-11-25 14:39:57,923 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-10
+2026-11-25 14:39:57,924 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-10
+2026-11-25 14:39:58,924 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-11
+2026-11-25 14:39:58,924 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-11
+2026-11-25 14:39:59,855 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-12
+2026-11-25 14:39:59,855 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-12
+2026-11-25 14:40:00,892 INFO o.a.j.r.Summariser: summary +     13 in 00:00:13 =    1.0/s Avg:  6832 Min:  1262 Max: 12163 Err:     0 (0.00%) Active: 88 Started: 100 Finished: 12
+2026-11-25 14:40:00,893 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-13
+2026-11-25 14:40:00,893 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-13
+2026-11-25 14:40:01,806 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-14
+2026-11-25 14:40:01,806 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-14
+2026-11-25 14:40:02,748 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-15
+2026-11-25 14:40:02,748 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-15
+2026-11-25 14:40:03,724 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-16
+2026-11-25 14:40:03,724 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-16
+2026-11-25 14:40:05,085 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-17
+2026-11-25 14:40:05,085 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-17
+2026-11-25 14:40:06,393 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-18
+2026-11-25 14:40:06,394 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-18
+2026-11-25 14:40:07,438 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-19
+2026-11-25 14:40:07,438 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-19
+2026-11-25 14:40:08,313 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-20
+2026-11-25 14:40:08,313 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-20
+2026-11-25 14:40:09,221 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-21
+2026-11-25 14:40:09,221 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-21
+2026-11-25 14:40:10,108 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-22
+2026-11-25 14:40:10,108 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-22
+2026-11-25 14:40:10,995 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-23
+2026-11-25 14:40:10,996 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-23
+2026-11-25 14:40:11,880 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-24
+2026-11-25 14:40:11,880 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-24
+2026-11-25 14:40:12,723 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-25
+2026-11-25 14:40:12,724 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-25
+2026-11-25 14:40:13,531 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-26
+2026-11-25 14:40:13,531 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-26
+2026-11-25 14:40:14,551 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-27
+2026-11-25 14:40:14,551 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-27
+2026-11-25 14:40:15,449 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-28
+2026-11-25 14:40:15,449 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-28
+2026-11-25 14:40:16,369 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-29
+2026-11-25 14:40:16,369 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-29
+2026-11-25 14:40:17,230 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-30
+2026-11-25 14:40:17,230 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-30
+2026-11-25 14:40:18,105 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-31
+2026-11-25 14:40:18,106 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-31
+2026-11-25 14:40:18,990 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-32
+2026-11-25 14:40:18,991 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-32
+2026-11-25 14:40:19,697 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-33
+2026-11-25 14:40:19,697 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-33
+2026-11-25 14:40:19,745 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-34
+2026-11-25 14:40:19,745 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-34
+2026-11-25 14:40:19,802 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-35
+2026-11-25 14:40:19,802 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-35
+2026-11-25 14:40:19,838 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-36
+2026-11-25 14:40:19,838 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-36
+2026-11-25 14:40:19,898 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-37
+2026-11-25 14:40:19,898 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-37
+2026-11-25 14:40:19,938 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-38
+2026-11-25 14:40:19,938 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-38
+2026-11-25 14:40:19,973 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-39
+2026-11-25 14:40:19,973 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-39
+2026-11-25 14:40:20,021 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-40
+2026-11-25 14:40:20,021 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-40
+2026-11-25 14:40:20,073 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-41
+2026-11-25 14:40:20,073 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-41
+2026-11-25 14:40:20,164 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-42
+2026-11-25 14:40:20,164 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-42
+2026-11-25 14:40:20,210 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-43
+2026-11-25 14:40:20,211 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-43
+2026-11-25 14:40:20,264 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-44
+2026-11-25 14:40:20,264 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-44
+2026-11-25 14:40:20,306 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-45
+2026-11-25 14:40:20,306 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-45
+2026-11-25 14:40:20,342 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-46
+2026-11-25 14:40:20,342 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-46
+2026-11-25 14:40:20,364 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-47
+2026-11-25 14:40:20,364 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-47
+2026-11-25 14:40:20,438 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-48
+2026-11-25 14:40:20,438 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-48
+2026-11-25 14:40:20,471 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-49
+2026-11-25 14:40:20,471 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-49
+2026-11-25 14:40:20,535 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-50
+2026-11-25 14:40:20,535 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-50
+2026-11-25 14:40:20,570 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-51
+2026-11-25 14:40:20,570 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-51
+2026-11-25 14:40:20,627 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-52
+2026-11-25 14:40:20,627 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-52
+2026-11-25 14:40:20,658 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-53
+2026-11-25 14:40:20,658 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-53
+2026-11-25 14:40:20,717 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-54
+2026-11-25 14:40:20,717 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-54
+2026-11-25 14:40:20,770 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-55
+2026-11-25 14:40:20,770 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-55
+2026-11-25 14:40:20,828 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-56
+2026-11-25 14:40:20,828 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-56
+2026-11-25 14:40:20,873 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-57
+2026-11-25 14:40:20,873 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-57
+2026-11-25 14:40:20,918 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-58
+2026-11-25 14:40:20,918 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-58
+2026-11-25 14:40:20,972 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-59
+2026-11-25 14:40:20,972 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-59
+2026-11-25 14:40:21,021 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-60
+2026-11-25 14:40:21,021 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-60
+2026-11-25 14:40:21,048 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-61
+2026-11-25 14:40:21,048 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-61
+2026-11-25 14:40:21,122 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-62
+2026-11-25 14:40:21,122 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-62
+2026-11-25 14:40:21,171 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-63
+2026-11-25 14:40:21,171 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-63
+2026-11-25 14:40:21,204 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-64
+2026-11-25 14:40:21,204 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-64
+2026-11-25 14:40:21,253 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-65
+2026-11-25 14:40:21,253 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-65
+2026-11-25 14:40:21,308 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-66
+2026-11-25 14:40:21,308 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-66
+2026-11-25 14:40:21,374 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-67
+2026-11-25 14:40:21,374 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-67
+2026-11-25 14:40:21,406 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-68
+2026-11-25 14:40:21,406 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-68
+2026-11-25 14:40:21,468 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-69
+2026-11-25 14:40:21,468 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-69
+2026-11-25 14:40:21,496 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-70
+2026-11-25 14:40:21,496 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-70
+2026-11-25 14:40:21,544 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-71
+2026-11-25 14:40:21,544 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-71
+2026-11-25 14:40:21,605 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-72
+2026-11-25 14:40:21,605 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-72
+2026-11-25 14:40:21,666 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-73
+2026-11-25 14:40:21,666 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-73
+2026-11-25 14:40:21,699 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-74
+2026-11-25 14:40:21,699 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-74
+2026-11-25 14:40:21,769 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-75
+2026-11-25 14:40:21,769 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-75
+2026-11-25 14:40:21,798 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-76
+2026-11-25 14:40:21,798 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-76
+2026-11-25 14:40:21,836 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-77
+2026-11-25 14:40:21,836 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-77
+2026-11-25 14:40:21,885 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-78
+2026-11-25 14:40:21,885 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-78
+2026-11-25 14:40:21,906 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-79
+2026-11-25 14:40:21,906 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-79
+2026-11-25 14:40:21,940 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-81
+2026-11-25 14:40:21,940 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-81
+2026-11-25 14:40:21,944 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-80
+2026-11-25 14:40:21,944 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-80
+2026-11-25 14:40:21,986 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-82
+2026-11-25 14:40:21,986 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-82
+2026-11-25 14:40:22,033 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-83
+2026-11-25 14:40:22,033 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-83
+2026-11-25 14:40:22,086 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-84
+2026-11-25 14:40:22,086 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-84
+2026-11-25 14:40:22,127 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-85
+2026-11-25 14:40:22,127 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-85
+2026-11-25 14:40:22,176 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-86
+2026-11-25 14:40:22,176 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-86
+2026-11-25 14:40:22,226 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-87
+2026-11-25 14:40:22,226 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-87
+2026-11-25 14:40:22,277 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-88
+2026-11-25 14:40:22,277 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-88
+2026-11-25 14:40:22,327 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-89
+2026-11-25 14:40:22,327 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-89
+2026-11-25 14:40:22,378 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-90
+2026-11-25 14:40:22,378 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-90
+2026-11-25 14:40:22,427 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-91
+2026-11-25 14:40:22,427 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-91
+2026-11-25 14:40:22,476 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-92
+2026-11-25 14:40:22,476 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-92
+2026-11-25 14:40:22,526 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-93
+2026-11-25 14:40:22,526 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-93
+2026-11-25 14:40:22,577 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-94
+2026-11-25 14:40:22,579 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-94
+2026-11-25 14:40:22,627 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-95
+2026-11-25 14:40:22,627 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-95
+2026-11-25 14:40:22,677 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-96
+2026-11-25 14:40:22,677 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-96
+2026-11-25 14:40:22,725 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-97
+2026-11-25 14:40:22,725 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-97
+2026-11-25 14:40:22,778 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-98
+2026-11-25 14:40:22,778 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-98
+2026-11-25 14:40:22,824 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-99
+2026-11-25 14:40:22,824 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-99
+2026-11-25 14:40:22,876 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-100
+2026-11-25 14:40:22,876 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-100
+2026-11-25 14:40:22,876 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-11-25 14:40:22,877 INFO o.a.j.s.FileServer: Close: D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU100-Run1-20261125-143936/VA-Failure-baseline-VU100-Run1-20261125-143936.csv
+2026-11-25 14:40:22,886 INFO o.a.j.r.Summariser: summary +     87 in 00:00:22 =    4.0/s Avg: 28159 Min: 13032 Max: 30045 Err:    68 (78.16%) Active: 0 Started: 100 Finished: 100
+2026-11-25 14:40:22,886 INFO o.a.j.r.Summariser: summary =    100 in 00:00:35 =    2.9/s Avg: 25387 Min:  1262 Max: 30045 Err:    68 (68.00%)

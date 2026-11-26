@@ -1,0 +1,2 @@
+﻿"Tanggal","Skenario","Fault","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput","Payment_Sukses_DB","Tiket_Terbuat_DB","Ticket_Confirmation_Rate"
+"2026-11-25 21:10:34","Failure","error","Failure-proposed-VU10-Run1","proposed","10","1","pay-va","100","30","70","30","11497.5","3812","4762","30004","30017","119.7","0.84","33","33","33"

@@ -1,0 +1,24 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Normal-baseline-VU10-Run1
+Tanggal   : 2026-11-25 20:05:18
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 114 detik
+Throughput: 0.88 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 10672.5 ms
+Min       : 1628 ms
+P50       : 9838 ms
+P95       : 16492 ms
+Max       : 17646 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 100
+Tickets ACTIVE    : 100
+Ticket Confirmation Rate : 100 %

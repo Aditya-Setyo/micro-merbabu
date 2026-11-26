@@ -1,0 +1,25 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Failure-proposed-VU100-Run3
+Tanggal   : 2026-11-26 14:17:56
+Skenario  : Failure - Fault error NYALA selama sesi
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 100
+Loops     : 1
+Total     : 100 request
+Durasi    : 33.1 detik
+Throughput: 3.02 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 13
+Gagal     : 87
+Rate      : 13 %
+Avg       : 28530 ms
+Min       : 4631 ms
+P50       : 30020 ms
+P95       : 30512 ms
+Max       : 30521 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 22
+Tickets ACTIVE    : 22
+Ticket Confirmation Rate : 22 %

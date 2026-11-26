@@ -1,0 +1,2 @@
+﻿"Tanggal","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput","Payment_Sukses_DB","Tiket_Terbuat_DB","Ticket_Confirmation_Rate"
+"2026-11-26 10:23:37","Normal-proposed-VU100-Run1","proposed","100","1","pay-va","100","26","74","26","26284.2","2495","30003","30018","30038","34.5","2.9","100","100","100"

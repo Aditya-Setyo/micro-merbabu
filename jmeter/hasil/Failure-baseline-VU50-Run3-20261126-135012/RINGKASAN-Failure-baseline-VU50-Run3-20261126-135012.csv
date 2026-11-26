@@ -1,0 +1,2 @@
+﻿"Tanggal","Skenario","Fault","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput","Payment_Sukses_DB","Tiket_Terbuat_DB","Ticket_Confirmation_Rate"
+"2026-11-26 13:50:12","Failure","error","Failure-baseline-VU50-Run3","baseline","50","3","pay-va-baseline","100","17","83","17","26995.6","3120","30003","30006","30008","63.6","1.57","53","53","53"

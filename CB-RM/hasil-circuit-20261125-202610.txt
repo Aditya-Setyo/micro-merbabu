@@ -1,0 +1,272 @@
+﻿=== TEST RM + CB OTOMATIS - 25 Nov 2026 20:26:10 ===
+
+--- 1. CEK 4 SERVICE ---
+[Cek] Booking 8001 jalan - http://127.0.0.1:8001/api/hiking-routes
+[Cek] Payment 8002 jalan - http://127.0.0.1:8002/api/circuit/status
+[Cek] Tracking 8003 jalan - http://127.0.0.1:8003/api/tracking/sos
+[Cek] Gate 8004 jalan - http://127.0.0.1:8004/api/fault-inject/status
+
+--- 2. TEST FAULT VIA API - PAKAI VA ASLI ---
+Retry: 3 attempt, jeda 1 detik. Timeout Gate per attempt 3 detik. Total maksimal sekitar 11 detik jika semua gagal.
+
+[2a] Fault latency, VA 8800000141 ...
+[Circuit] Di-reset ke CLOSED
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[OK] VA 8800000141 disiapkan: booking_id 141, status PENDING, tiket dihapus
+[2a] Circuit sebelum: {"service":"gate","state":"CLOSED","failure_count":0,"failure_rate":0,"window":[],"open_until":null,"checked_at":"2026-11-25 20:26:24"}
+[Fault] Diaktifkan: latency
+[Fault] Status sekarang: {"success":true,"fault_injection":"latency"}
+[2a-latency] Hasil pay-va: HTTP Sukses=True TiketOk=True HTTP=200 Elapsed=1530 ms VA=8800000141
+[2a-latency] Body: {"success":true,"message":"Pembayaran Virtual Account berhasil diproses.","payment_details":{"id":21240,"booking_id":141,"va_number":"8800000141","amount":"200000.00","status":"SUCCESS","created_at":"2026-11-24T17:21:52.000000Z","updated_at":"2026-11-25T13:26:26.000000Z"},"circuit_breaker":{"state":"CLOSED","attempts":1},"gate_service_response":{"success":true,"message":"Tiket berhasil diterbitkan...
+[2a-latency] Circuit sesudah: {"service":"gate","state":"CLOSED","failure_count":0,"failure_rate":0,"window":[true],"open_until":null,"checked_at":"2026-11-25 20:26:27"}
+[2a] Cara baca baru: Gate lambat, tiap attempt timeout 3 detik, retry 3x dengan jeda 1 detik. Jika TiketOk=true, retry menyelamatkan. Jika HTTP 503, berarti Fail Fast karena Circuit OPEN. Jika HTTP 502, berarti Gate gagal setelah 3 attempt.
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[Circuit] Di-reset ke CLOSED
+
+[2b] Fault error, VA 8800000142 ...
+[Circuit] Di-reset ke CLOSED
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[OK] VA 8800000142 disiapkan: booking_id 142, status PENDING, tiket dihapus
+[2b] Circuit sebelum: {"service":"gate","state":"CLOSED","failure_count":0,"failure_rate":0,"window":[],"open_until":null,"checked_at":"2026-11-25 20:26:35"}
+[Fault] Diaktifkan: error
+[Fault] Status sekarang: {"success":true,"fault_injection":"error"}
+[2b-error] Hasil pay-va: HTTP Sukses=True TiketOk=True HTTP=200 Elapsed=1151 ms VA=8800000142
+[2b-error] Body: {"success":true,"message":"Pembayaran Virtual Account berhasil diproses.","payment_details":{"id":21241,"booking_id":142,"va_number":"8800000142","amount":"300000.00","status":"SUCCESS","created_at":"2026-11-24T17:21:52.000000Z","updated_at":"2026-11-25T13:26:37.000000Z"},"circuit_breaker":{"state":"CLOSED","attempts":1},"gate_service_response":{"success":true,"message":"Tiket berhasil diterbitkan...
+[2b-error] Circuit sesudah: {"service":"gate","state":"CLOSED","failure_count":0,"failure_rate":0,"window":[true],"open_until":null,"checked_at":"2026-11-25 20:26:38"}
+[2b] Cara baca baru: Gate balas 500, retry 3x jeda 1 detik. Jika TiketOk=true, retry menyelamatkan. Jika HTTP 502 atau 503, berarti gagal setelah retry atau Fail Fast.
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[Circuit] Di-reset ke CLOSED
+VA 8800000141 dan 8800000142 dikembalikan ke PENDING, tiketnya dihapus.
+
+--- 3. JALANIN circuit:test UJI 0-5 ---
+Uji 0 = Retry murni simulasi (500,500,200). Uji 1-5 = CLOSED, OPEN, Fail Fast, HALF-OPEN pulih, HALF-OPEN gagal.
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[Circuit] Di-reset ke CLOSED
+==================================================
+PENGUJIAN OTOMATIS RETRY + CIRCUIT BREAKER
+Target layanan: Gate & Ticket Confirmation Service
+==================================================
+Parameter pengujian yang dipakai:
+  - Retry: maksimal 3x percobaan (1 awal + 2 ulang), jeda 5 detik antar percobaan
+  - Retry terpicu oleh: HTTP 500 atau Connection Timeout / gagal koneksi
+  - Circuit Breaker: sliding window 10 request, ambang batas 50% (5 gagal -> OPEN)
+  - Durasi OPEN: 30 detik, setelah itu HALF-OPEN dengan 1 probe request
+  - Fail Fast: saat OPEN, request ditolak langsung dengan HTTP 503 tanpa retry
+  - Total tahap: 6 tahap (Uji 0 sampai Uji 5) - Retry + Circuit digabung 1x run
+
+[UJI 0] Retry Murni - Gagal 2x Lalu Berhasil di Percobaan Ke-3
+  Tujuan     : Membuktikan Retry bisa menyelamatkan transaksi yang gagal sesaat.
+  Kondisi awal: Circuit CLOSED, Gate disimulasikan gagal sesaat.
+  Aksi       : Kirim 1 transaksi. Percobaan ke-1 = HTTP 500 Gagal, ke-2 = HTTP 500 Gagal, ke-3 = HTTP 200 Berhasil.
+  Harapan    : Setelah 2x gagal + jeda 5 detik tiap gagal, percobaan ke-3 berhasil. Retry Success Rate harus 100% untuk tahap ini.
+  Catatan    : Tahap ini menguji Retry saja, tanpa memicu Circuit Breaker (baru 2 gagal, belum sampai 5).
+               Simulasi gangguan sesaat dipakai agar pengujian bisa jalan otomatis 1x run tanpa perlu setting Fault Injection manual di Gate.
+    Percobaan ke-1: GAGAL - HTTP 500 (simulasi gangguan sesaat) - 120.42 ms
+    Percobaan ke-2: GAGAL - HTTP 500 (simulasi gangguan sesaat) - 120.19 ms
+    Percobaan ke-3: SUKSES - HTTP 200 - 850.23 ms (berhasil setelah retry)
+  -> HASIL: PASS - Berhasil di percobaan ke-3 setelah 2x gagal 500
+  Detail: Total attempt = 3, Gagal awal = 2, Retry Success untuk tahap ini = 100%
+
+[UJI 1] Kondisi Normal - Gate Berjalan, Circuit CLOSED
+  Tujuan     : Memastikan komunikasi normal berjalan tanpa hambatan saat layanan tujuan aktif.
+  Kondisi awal: Circuit CLOSED, Gate aktif di port 8004.
+  Aksi       : Kirim 1 request ke Gate, tanpa gangguan.
+  Harapan    : Request berhasil, HTTP 200, Circuit tetap CLOSED.
+    Percobaan ke-1: SUKSES - HTTP 200 - 504.37 ms
+  -> HASIL: PASS - State = CLOSED, request berhasil
+
+[UJI 2] Kondisi Gagal Berulang - Gate Mati, Circuit Berubah ke OPEN
+  Tujuan     : Memastikan Circuit berubah dari CLOSED ke OPEN setelah kegagalan mencapai ambang batas.
+  Kondisi awal: Circuit di-reset ke CLOSED, Gate dimatikan (port 8999, tidak ada layanan).
+  Aksi       : Kirim request berulang sampai 5x gagal (sesuai ambang batas 5 gagal).
+  Harapan    : Setelah 5 gagal, Circuit menjadi OPEN. Retry dilakukan tiap gagal dengan jeda 5 detik.
+  Catatan    : 5x percobaan di sini BUKAN jumlah Retry normal (Retry normal max 3x).
+               5x dipakai khusus untuk memicu Circuit Breaker sampai OPEN.
+    Percobaan ke-1: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2055 ms: Could not conne
+    Percobaan ke-2: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2039 ms: Could not conne
+    Percobaan ke-3: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2049 ms: Could not conne
+    Percobaan ke-4: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2045 ms: Could not conne
+    Percobaan ke-5: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2069 ms: Could not conne
+  -> HASIL: PASS - State = OPEN setelah 5 gagal
+
+[UJI 3] Fail Fast - Request Ditolak Cepat Saat Circuit OPEN
+  Tujuan     : Memastikan saat Circuit OPEN, request tidak diteruskan ke layanan tujuan dan langsung ditolak.
+  Kondisi awal: Circuit OPEN dari Uji 2.
+  Aksi       : Coba kirim 1 request, cek apakah diizinkan atau ditolak.
+  Harapan    : Request ditolak dalam waktu sangat singkat (< 100 ms), HTTP 503, tanpa retry dan tanpa memanggil Gate.
+  -> HASIL: PASS - Ditolak dalam 2.39 ms tanpa retry, HTTP 503
+
+[UJI 4] Pemulihan - HALF-OPEN ke CLOSED Saat Gate Pulih
+  Tujuan     : Memastikan setelah durasi OPEN habis, Circuit memberi kesempatan 1 probe untuk cek pemulihan.
+  Kondisi awal: Circuit OPEN, Gate kembali aktif.
+  Aksi       : Tunggu 30 detik sampai OPEN habis -> HALF-OPEN -> kirim 1 probe request.
+  Harapan    : Jika probe berhasil, Circuit kembali ke CLOSED dan komunikasi normal lagi.
+  Recovery Time diukur dari saat Circuit mulai OPEN sampai kembali CLOSED.
+  Menunggu 30 detik untuk masuk HALF-OPEN...
+
+    Menunggu... 30 detik 
+    Menunggu... 29 detik 
+    Menunggu... 28 detik 
+    Menunggu... 27 detik 
+    Menunggu... 26 detik 
+    Menunggu... 25 detik 
+    Menunggu... 24 detik 
+    Menunggu... 23 detik 
+    Menunggu... 22 detik 
+    Menunggu... 21 detik 
+    Menunggu... 20 detik 
+    Menunggu... 19 detik 
+    Menunggu... 18 detik 
+    Menunggu... 17 detik 
+    Menunggu... 16 detik 
+    Menunggu... 15 detik 
+    Menunggu... 14 detik 
+    Menunggu... 13 detik 
+    Menunggu... 12 detik 
+    Menunggu... 11 detik 
+    Menunggu... 10 detik 
+    Menunggu... 9 detik 
+    Menunggu... 8 detik 
+    Menunggu... 7 detik 
+    Menunggu... 6 detik 
+    Menunggu... 5 detik 
+    Menunggu... 4 detik 
+    Menunggu... 3 detik 
+    Menunggu... 2 detik 
+    Menunggu... 1 detik 
+    Menunggu... selesai          
+  State setelah 30 detik: HALF_OPEN (seharusnya HALF-OPEN)
+    Percobaan ke-1: SUKSES - HTTP 200 - 817.66 ms
+  -> HASIL: PASS - Balik ke CLOSED, Recovery Time: 31.29 detik
+
+[UJI 5] Pemulihan Gagal - HALF-OPEN Kembali ke OPEN Saat Gate Masih Mati
+  Tujuan     : Memastikan jika probe di HALF-OPEN gagal, Circuit kembali ke OPEN (tidak langsung CLOSED).
+  Kondisi awal: Circuit CLOSED, lalu dibuat OPEN lagi dengan 5x gagal.
+  Aksi       : Buat OPEN lagi (5x gagal) -> tunggu 30 detik -> HALF-OPEN -> kirim 1 probe ke Gate yang masih mati.
+  Harapan    : Probe gagal, Circuit kembali ke OPEN dan request berikutnya ditolak lagi (503).
+    Percobaan ke-1: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2057 ms: Could not conne
+    Percobaan ke-2: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2050 ms: Could not conne
+    Percobaan ke-3: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2051 ms: Could not conne
+    Percobaan ke-4: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2036 ms: Could not conne
+    Percobaan ke-5: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2054 ms: Could not conne
+  Sudah OPEN lagi, tunggu 30 detik untuk HALF-OPEN...
+
+    Menunggu... 30 detik 
+    Menunggu... 29 detik 
+    Menunggu... 28 detik 
+    Menunggu... 27 detik 
+    Menunggu... 26 detik 
+    Menunggu... 25 detik 
+    Menunggu... 24 detik 
+    Menunggu... 23 detik 
+    Menunggu... 22 detik 
+    Menunggu... 21 detik 
+    Menunggu... 20 detik 
+    Menunggu... 19 detik 
+    Menunggu... 18 detik 
+    Menunggu... 17 detik 
+    Menunggu... 16 detik 
+    Menunggu... 15 detik 
+    Menunggu... 14 detik 
+    Menunggu... 13 detik 
+    Menunggu... 12 detik 
+    Menunggu... 11 detik 
+    Menunggu... 10 detik 
+    Menunggu... 9 detik 
+    Menunggu... 8 detik 
+    Menunggu... 7 detik 
+    Menunggu... 6 detik 
+    Menunggu... 5 detik 
+    Menunggu... 4 detik 
+    Menunggu... 3 detik 
+    Menunggu... 2 detik 
+    Menunggu... 1 detik 
+    Menunggu... selesai          
+  State sekarang: HALF_OPEN (seharusnya HALF-OPEN)
+    Percobaan ke-1: GAGAL - cURL error 7: Failed to connect to 127.0.0.1:8999 after 2034 ms: Could not conne
+  -> HASIL: PASS - Balik ke OPEN lagi setelah probe gagal
+
+==================================================
+HASIL AKHIR - RINGKASAN METRIK
+==================================================
+Keterangan metrik:
+  - Success Rate: persentase request yang berhasil dari total request.
+  - Failure Rate: persentase request yang gagal dari total request.
+  - Average/Min/Max/Median/P95: sebaran waktu respons semua percobaan (dalam ms).
+  - Throughput: jumlah request per detik selama pengujian berlangsung.
+  - Retry Count: jumlah percobaan ulang yang dilakukan.
+  - Retry Success Rate: persentase retry yang akhirnya berhasil.
+  - Rejection Rate: persentase request yang ditolak Fail Fast (HTTP 503) saat OPEN.
+  - Recovery Time: waktu dari Circuit mulai OPEN sampai kembali CLOSED.
+
+Total Requests          : 17
+Total Durasi Test       : 135.32 detik
+
+UJI 0 Retry Murni       : PASS - Berhasil di attempt ke-3 (500, 500, 200)
+  Total attempt Uji 0   : 3 (harapan: 3)
+
+Success Rate            : 17.65% (3 sukses dari 17)
+Failure Rate            : 76.47% (13 gagal)
+Average Response Time   : 1470.28 ms
+Min Response Time       : 2.39 ms
+Max Response Time       : 2071.56 ms
+Median (P50)            : 2042.8 ms
+P95 Response Time       : 2071.56 ms
+Throughput              : 0.13 req/detik
+
+Retry Count             : 10 kali percobaan ulang
+Retry Success Rate      : 10% (1 retry yang akhirnya berhasil)
+Circuit Breaker State   : OPEN (state terakhir setelah Uji 5)
+Failure Rate Window     : 100% (Window 10, ambang batas 50% = 5 gagal)
+Rejection Rate (503)    : 5.88% (1 ditolak Fail Fast)
+Recovery Time           : 31.29 detik (OPEN -> CLOSED di Uji 4)
+
+HTTP Status Distribution:
+  200/201 (OK)          : 3 request
+  500 (Internal Error / Gagal Koneksi): 2 request
+  503 (Fail Fast)        : 1 request
+
+Hasil Per Tahap:
+  - UJI 0 : PASS | State: CLOSED | FailureRate: 66.7% | Durasi: 10.07 detik | Berhasil di percobaan ke-3
+  - UJI 1 : PASS | State: CLOSED | FailureRate: 0% | Durasi: 0.51 detik | Berhasil
+  - UJI 2 : PASS | State: OPEN | FailureRate: 100% | Durasi: 30.45 detik | Gagal 5x (sesuai harapan)
+  - UJI 3 : PASS | State: OPEN | FailureRate: 100% | Durasi: 0.01 detik | Ditolak 2.39 ms, HTTP 503
+  - UJI 4 : PASS | State: CLOSED | FailureRate: 0% | Durasi: 31.28 detik | Probe berhasil
+  - UJI 5 : PASS | State: OPEN | FailureRate: 100% | Durasi: 62.89 detik | Probe gagal (sesuai harapan)
+
+Transisi Circuit Breaker:
+  - UJI 0 -> CLOSED (FailureRate: 66.7%)
+  - UJI 1 -> CLOSED (FailureRate: 0%)
+  - UJI 2 -> OPEN (FailureRate: 100%)
+  - UJI 3 -> OPEN (FailureRate: 100%)
+  - UJI 4 -> CLOSED (FailureRate: 0%)
+  - UJI 5 -> OPEN (FailureRate: 100%)
+==================================================
+Laporan tersimpan otomatis:
+  - TXT (Notepad) : storage/app/circuit_report_2026-11-25_20-26-42.txt
+  - CSV Ringkasan : storage/app/circuit_summary_2026-11-25_20-26-42.csv
+  - CSV Detail    : storage/app/circuit_attempts_2026-11-25_20-26-42.csv
+  - JSON          : storage/app/circuit_metrics_2026-11-25_20-26-42.json
+
+[circuit:test] Exit code: 0
+
+--- 3b. REKAP UJI 0-5 ---
+[Rekap] [UJI 0] Retry Murni - Gagal 2x Lalu Berhasil di Percobaan Ke-3
+[Rekap] [UJI 1] Kondisi Normal - Gate Berjalan, Circuit CLOSED
+[Rekap] [UJI 2] Kondisi Gagal Berulang - Gate Mati, Circuit Berubah ke OPEN
+[Rekap] [UJI 3] Fail Fast - Request Ditolak Cepat Saat Circuit OPEN
+[Rekap] [UJI 4] Pemulihan - HALF-OPEN ke CLOSED Saat Gate Pulih
+[Rekap] [UJI 5] Pemulihan Gagal - HALF-OPEN Kembali ke OPEN Saat Gate Masih Mati
+[Rekap] PASS: 6 | FAIL: 0 | Harapan: 6 PASS (Uji 0-5)
+
+--- 4. SELESAI ---
+File hasil TXT: D:\Skripsi\BTN Gunung Merbabu\micro-merbabu\hasil-circuit-20261125-202610.txt
+File JSON buat Bab 4: D:\Skripsi\BTN Gunung Merbabu\micro-merbabu\payment-service\storage\app\circuit_metrics.json
+[Fault] Dimatikan - Gate normal
+[Fault] Status sekarang: {"success":true,"fault_injection":"none"}
+[Circuit] Di-reset ke CLOSED

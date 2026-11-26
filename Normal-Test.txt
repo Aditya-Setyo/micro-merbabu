@@ -1,0 +1,214 @@
+C:\laragon\www
+λ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 243
+Server version: 8.4.3 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 0 rows affected (0.00 sec)
+
+Database changed
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 100  Changed: 0  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |    100 |
++---------+--------+
+1 row in set (0.01 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+Rows matched: 100  Changed: 100  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |    100 |
++---------+--------+
+1 row in set (0.12 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 100 rows affected (0.05 sec)
+
+Database changed
+Query OK, 100 rows affected (0.05 sec)
+Rows matched: 100  Changed: 100  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.06 sec)
+
+Empty set (0.20 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |     99 |
+| PENDING |      1 |
++---------+--------+
+2 rows in set (0.01 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+
+Database changed
+Query OK, 99 rows affected (0.01 sec)
+Rows matched: 100  Changed: 99  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+Rows matched: 100  Changed: 100  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> USE ticket_db; DELETE FROM tickets WHERE booking_id BETWEEN 141 AND 240;  USE payment_db; UPDATE payments SET status = 'PENDING' WHERE booking_id BETWEEN 141 AND 240;
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+
+Database changed
+Query OK, 100 rows affected (0.01 sec)
+Rows matched: 100  Changed: 100  Warnings: 0
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| PENDING |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
+Empty set (0.00 sec)
+
+mysql> SELECT status, COUNT(*) AS jumlah FROM payment_db.payments WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;  SELECT status, COUNT(*) AS jumlah FROM ticket_db.tickets WHERE booking_id BETWEEN 141 AND 240 GROUP BY status;
++---------+--------+
+| status  | jumlah |
++---------+--------+
+| SUCCESS |    100 |
++---------+--------+
+1 row in set (0.00 sec)
+
++--------+--------+
+| status | jumlah |
++--------+--------+
+| ACTIVE |    100 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql>

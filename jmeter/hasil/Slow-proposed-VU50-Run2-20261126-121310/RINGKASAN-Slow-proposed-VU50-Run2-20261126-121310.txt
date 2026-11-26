@@ -1,0 +1,25 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Slow-proposed-VU50-Run2
+Tanggal   : 2026-11-26 12:13:10
+Skenario  : Slow - Fault latency NYALA selama sesi
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 50
+Loops     : 2
+Total     : 100 request
+Durasi    : 64.5 detik
+Throughput: 1.55 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 17
+Gagal     : 83
+Rate      : 17 %
+Avg       : 28101.4 ms
+Min       : 3456 ms
+P50       : 30003 ms
+P95       : 30005 ms
+Max       : 30006 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 46
+Tickets ACTIVE    : 46
+Ticket Confirmation Rate : 46 %

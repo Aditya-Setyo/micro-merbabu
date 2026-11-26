@@ -1,0 +1,25 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Failure-baseline-VU50-Run1
+Tanggal   : 2026-11-26 13:44:59
+Skenario  : Failure - Fault error NYALA selama sesi
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 50
+Loops     : 2
+Total     : 100 request
+Durasi    : 64.4 detik
+Throughput: 1.55 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 27
+Gagal     : 73
+Rate      : 27 %
+Avg       : 25551 ms
+Min       : 1311 ms
+P50       : 30003 ms
+P95       : 30004 ms
+Max       : 30005 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 61
+Tickets ACTIVE    : 61
+Ticket Confirmation Rate : 61 %

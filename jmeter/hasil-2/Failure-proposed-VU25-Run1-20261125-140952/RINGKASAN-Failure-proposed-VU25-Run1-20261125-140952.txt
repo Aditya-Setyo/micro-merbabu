@@ -1,0 +1,30 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Failure-proposed-VU25-Run1
+Tanggal   : 2026-11-25 14:09:52
+Skenario  : Failure - Fault error NYALA selama sesi
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 25
+Loops     : 4
+Total     : 100 request
+Durasi    : 124.6 detik
+Throughput: 0.8 req/detik
+
+HASIL
+
+Total     : 100
+Sukses    : 19
+Gagal     : 81
+Rate      : 19 %
+Avg       : 27519.3 ms
+Min       : 1189 ms
+P50       : 30003 ms
+P95       : 30005 ms
+Max       : 30007 ms
+
+FILE
+
+DATA mentah : DATA-Failure-proposed-VU25-Run1-20261125-140952.jtl
+Log JMeter : LOG-Failure-proposed-VU25-Run1-20261125-140952.log
+Data VA    : VA-Failure-proposed-VU25-Run1-20261125-140952.csv

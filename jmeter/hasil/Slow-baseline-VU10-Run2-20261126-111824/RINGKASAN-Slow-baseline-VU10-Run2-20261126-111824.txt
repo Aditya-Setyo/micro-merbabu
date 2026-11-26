@@ -1,0 +1,25 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Slow-baseline-VU10-Run2
+Tanggal   : 2026-11-26 11:18:24
+Skenario  : Slow - Fault latency NYALA selama sesi
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 161.5 detik
+Throughput: 0.62 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 15221.2 ms
+Min       : 3625 ms
+P50       : 15352 ms
+P95       : 20542 ms
+Max       : 22465 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 100
+Tickets ACTIVE    : 100
+Ticket Confirmation Rate : 100 %

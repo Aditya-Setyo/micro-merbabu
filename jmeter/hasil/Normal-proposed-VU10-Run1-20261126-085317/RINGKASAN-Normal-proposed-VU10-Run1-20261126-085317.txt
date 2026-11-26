@@ -1,0 +1,24 @@
+﻿RINGKASAN HASIL PENGUJIAN
+Sesi      : Normal-proposed-VU10-Run1
+Tanggal   : 2026-11-26 08:53:17
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 104.7 detik
+Throughput: 0.96 req/detik
+HASIL JMeter (HTTP)
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 9680.2 ms
+Min       : 2225 ms
+P50       : 9773 ms
+P95       : 11003 ms
+Max       : 11843 ms
+HASIL DATABASE (BUKTI)
+Payments SUCCESS : 100
+Tickets ACTIVE    : 100
+Ticket Confirmation Rate : 100 %

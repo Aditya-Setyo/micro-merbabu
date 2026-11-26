@@ -1,0 +1,2 @@
+﻿"Tanggal","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik"
+"2026-11-25 11:22:41","Normal-proposed-VU10-Run3","proposed","10","3","pay-va","100","100","0","100","9730","1461","10144","12359","12570","105.3"

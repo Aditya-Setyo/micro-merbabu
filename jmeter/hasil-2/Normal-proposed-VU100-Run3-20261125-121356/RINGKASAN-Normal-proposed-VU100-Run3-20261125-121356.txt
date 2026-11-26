@@ -1,0 +1,28 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Normal-proposed-VU100-Run3
+Tanggal   : 2026-11-25 12:13:56
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 100
+Loops     : 1
+Total     : 100 request
+Durasi    : 34.3 detik
+
+HASIL
+
+Total     : 100
+Sukses    : 20
+Gagal     : 80
+Rate      : 20 %
+Avg       : 26792.9 ms
+Min       : 1491 ms
+P50       : 30004 ms
+P95       : 30074 ms
+Max       : 30165 ms
+
+FILE
+
+DATA mentah : DATA-Normal-proposed-VU100-Run3-20261125-121356.jtl
+Log JMeter : LOG-Normal-proposed-VU100-Run3-20261125-121356.log
+Data VA    : VA-Normal-proposed-VU100-Run3-20261125-121356.csv

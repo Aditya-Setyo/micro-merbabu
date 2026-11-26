@@ -1,0 +1,28 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Normal-proposed-VU10-Run2
+Tanggal   : 2026-11-25 11:19:33
+Mode      : proposed
+Endpoint  : pay-va
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 114.4 detik
+
+HASIL
+
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 10703.1 ms
+Min       : 2113 ms
+P50       : 10832 ms
+P95       : 13284 ms
+Max       : 13620 ms
+
+FILE
+
+DATA mentah : DATA-Normal-proposed-VU10-Run2-20261125-111933.jtl
+Log JMeter : LOG-Normal-proposed-VU10-Run2-20261125-111933.log
+Data VA    : VA-Normal-proposed-VU10-Run2-20261125-111933.csv

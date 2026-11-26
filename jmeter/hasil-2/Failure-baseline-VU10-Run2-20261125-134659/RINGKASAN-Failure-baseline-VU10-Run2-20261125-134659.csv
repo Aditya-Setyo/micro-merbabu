@@ -1,0 +1,2 @@
+﻿"Tanggal","Skenario","Fault","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput"
+"2026-11-25 13:46:59","Failure","error","Failure-baseline-VU10-Run2","baseline","10","2","pay-va-baseline","100","100","0","100","8511.2","1080","8942","10068","10119","92.8","1.08"

@@ -1,0 +1,140 @@
+2026-11-26 13:26:16,788 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-11-26 13:26:16,823 INFO o.a.j.JMeter: Loading user properties from: D:\Skripsi\apache-jmeter-5.6.3\bin\user.properties
+2026-11-26 13:26:16,824 INFO o.a.j.JMeter: Loading system properties from: D:\Skripsi\apache-jmeter-5.6.3\bin\system.properties
+2026-11-26 13:26:16,826 INFO o.a.j.JMeter: Setting JMeter property: vu=25
+2026-11-26 13:26:16,826 INFO o.a.j.JMeter: Setting JMeter property: loops=4
+2026-11-26 13:26:16,826 INFO o.a.j.JMeter: Setting JMeter property: vaFile=D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU25-Run2-20261126-132603/VA-Failure-baseline-VU25-Run2-20261126-132603.csv
+2026-11-26 13:26:16,827 INFO o.a.j.JMeter: Setting JMeter property: endpoint=pay-va-baseline
+2026-11-26 13:26:16,850 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-11-26 13:26:16,851 INFO o.a.j.JMeter: Version 5.6.3
+2026-11-26 13:26:16,851 INFO o.a.j.JMeter: java.version=25.0.5.1
+2026-11-26 13:26:16,852 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-11-26 13:26:16,853 INFO o.a.j.JMeter: os.name=Windows 11
+2026-11-26 13:26:16,853 INFO o.a.j.JMeter: os.arch=amd64
+2026-11-26 13:26:16,853 INFO o.a.j.JMeter: os.version=10.0
+2026-11-26 13:26:16,854 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-11-26 13:26:16,854 INFO o.a.j.JMeter: java.awt.headless=true
+2026-11-26 13:26:16,854 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-11-26 13:26:16,854 INFO o.a.j.JMeter: Available Processors =4
+2026-11-26 13:26:16,885 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-11-26 13:26:16,886 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-11-26 13:26:16,886 INFO o.a.j.JMeter: JMeterHome=D:\Skripsi\apache-jmeter-5.6.3
+2026-11-26 13:26:16,886 INFO o.a.j.JMeter: user.dir  =D:\Skripsi\BTN Gunung Merbabu\micro-merbabu
+2026-11-26 13:26:16,887 INFO o.a.j.JMeter: PWD       =D:\Skripsi\BTN Gunung Merbabu\micro-merbabu
+2026-11-26 13:26:16,888 INFO o.a.j.JMeter: IP: 192.168.100.28 Name: LAPTOP-EO29SMEQ FullName: LAPTOP-EO29SMEQ
+2026-11-26 13:26:16,925 INFO o.a.j.s.FileServer: Default base='D:\Skripsi\BTN Gunung Merbabu\micro-merbabu'
+2026-11-26 13:26:16,927 INFO o.a.j.s.FileServer: Set new base='D:\Skripsi\BTN Gunung Merbabu\micro-merbabu\jmeter'
+2026-11-26 13:26:17,977 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-11-26 13:26:18,038 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-11-26 13:26:18,055 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-11-26 13:26:18,064 INFO o.a.j.s.SaveService: Loading file: jmeter\payva-test.jmx
+2026-11-26 13:26:18,209 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-26 13:26:18,210 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-26 13:26:18,210 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-26 13:26:18,210 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-26 13:26:18,210 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-11-26 13:26:18,210 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-11-26 13:26:18,241 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-11-26 13:26:18,288 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-11-26 13:26:18,290 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-26 13:26:18,290 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-26 13:26:18,303 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-11-26 13:26:18,303 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-11-26 13:26:18,623 INFO o.a.j.JMeter: Running test (1795674378623)
+2026-11-26 13:26:18,668 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Thread Group
+2026-11-26 13:26:18,669 INFO o.a.j.e.StandardJMeterEngine: Starting 25 threads for group Thread Group.
+2026-11-26 13:26:18,669 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-26 13:26:18,669 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=25 ramp-up=5 delayedStart=false
+2026-11-26 13:26:18,697 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-11-26 13:26:18,697 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-11-26 13:26:18,845 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-1
+2026-11-26 13:26:18,849 INFO o.a.j.s.FileServer: Stored: D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU25-Run2-20261126-132603/VA-Failure-baseline-VU25-Run2-20261126-132603.csv
+2026-11-26 13:26:18,906 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = LAPTOP-EO29SMEQ
+2026-11-26 13:26:18,917 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-11-26 13:26:18,921 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-11-26 13:26:18,922 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-11-26 13:26:18,923 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-11-26 13:26:18,923 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-11-26 13:26:19,041 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-2
+2026-11-26 13:26:19,242 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-3
+2026-11-26 13:26:19,440 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-4
+2026-11-26 13:26:19,640 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-5
+2026-11-26 13:26:19,839 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-6
+2026-11-26 13:26:20,035 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-7
+2026-11-26 13:26:20,235 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-8
+2026-11-26 13:26:20,431 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-9
+2026-11-26 13:26:20,635 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-10
+2026-11-26 13:26:20,832 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-11
+2026-11-26 13:26:21,032 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-12
+2026-11-26 13:26:21,232 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-13
+2026-11-26 13:26:21,429 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-14
+2026-11-26 13:26:21,630 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-15
+2026-11-26 13:26:21,828 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-16
+2026-11-26 13:26:22,027 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-17
+2026-11-26 13:26:22,226 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-18
+2026-11-26 13:26:22,427 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-19
+2026-11-26 13:26:22,628 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-20
+2026-11-26 13:26:22,824 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-21
+2026-11-26 13:26:23,024 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-22
+2026-11-26 13:26:23,224 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-23
+2026-11-26 13:26:23,423 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-24
+2026-11-26 13:26:23,622 INFO o.a.j.t.JMeterThread: Thread started: Thread Group 1-25
+2026-11-26 13:26:30,352 INFO o.a.j.r.Summariser: summary +     11 in 00:00:12 =    0.9/s Avg:  5480 Min:  1091 Max:  9712 Err:     3 (27.27%) Active: 25 Started: 25 Finished: 0
+2026-11-26 13:27:00,790 INFO o.a.j.r.Summariser: summary +     34 in 00:00:30 =    1.1/s Avg: 19370 Min: 10362 Max: 23519 Err:    10 (29.41%) Active: 25 Started: 25 Finished: 0
+2026-11-26 13:27:00,791 INFO o.a.j.r.Summariser: summary =     45 in 00:00:42 =    1.1/s Avg: 15974 Min:  1091 Max: 23519 Err:    13 (28.89%)
+2026-11-26 13:27:12,827 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-2
+2026-11-26 13:27:12,828 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-2
+2026-11-26 13:27:18,297 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-1
+2026-11-26 13:27:18,297 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-1
+2026-11-26 13:27:22,941 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-3
+2026-11-26 13:27:22,941 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-3
+2026-11-26 13:27:29,143 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-4
+2026-11-26 13:27:29,143 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-4
+2026-11-26 13:27:30,026 INFO o.a.j.r.Summariser: summary +     31 in 00:00:29 =    1.1/s Avg: 23022 Min: 22459 Max: 23845 Err:     4 (12.90%) Active: 21 Started: 25 Finished: 4
+2026-11-26 13:27:30,026 INFO o.a.j.r.Summariser: summary =     76 in 00:01:11 =    1.1/s Avg: 18849 Min:  1091 Max: 23845 Err:    17 (22.37%)
+2026-11-26 13:27:33,481 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-5
+2026-11-26 13:27:33,481 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-5
+2026-11-26 13:27:34,385 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-6
+2026-11-26 13:27:34,385 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-6
+2026-11-26 13:27:35,420 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-7
+2026-11-26 13:27:35,420 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-7
+2026-11-26 13:27:36,294 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-8
+2026-11-26 13:27:36,294 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-8
+2026-11-26 13:27:37,189 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-9
+2026-11-26 13:27:37,189 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-9
+2026-11-26 13:27:38,023 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-10
+2026-11-26 13:27:38,023 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-10
+2026-11-26 13:27:38,937 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-11
+2026-11-26 13:27:38,937 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-11
+2026-11-26 13:27:39,858 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-12
+2026-11-26 13:27:39,858 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-12
+2026-11-26 13:27:40,825 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-13
+2026-11-26 13:27:40,825 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-13
+2026-11-26 13:27:43,749 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-14
+2026-11-26 13:27:43,749 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-14
+2026-11-26 13:27:44,876 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-15
+2026-11-26 13:27:44,876 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-15
+2026-11-26 13:27:45,807 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-16
+2026-11-26 13:27:45,807 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-16
+2026-11-26 13:27:46,733 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-17
+2026-11-26 13:27:46,734 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-17
+2026-11-26 13:27:47,663 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-18
+2026-11-26 13:27:47,663 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-18
+2026-11-26 13:27:48,597 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-19
+2026-11-26 13:27:48,598 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-19
+2026-11-26 13:27:49,503 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-20
+2026-11-26 13:27:49,503 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-20
+2026-11-26 13:27:50,349 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-21
+2026-11-26 13:27:50,350 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-21
+2026-11-26 13:27:51,280 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-22
+2026-11-26 13:27:51,280 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-22
+2026-11-26 13:27:52,217 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-23
+2026-11-26 13:27:52,217 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-23
+2026-11-26 13:27:53,104 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-24
+2026-11-26 13:27:53,104 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-24
+2026-11-26 13:27:54,004 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group 1-25
+2026-11-26 13:27:54,005 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group 1-25
+2026-11-26 13:27:54,010 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-11-26 13:27:54,013 INFO o.a.j.s.FileServer: Close: D:/Skripsi/BTN Gunung Merbabu/micro-merbabu/jmeter/hasil/Failure-baseline-VU25-Run2-20261126-132603/VA-Failure-baseline-VU25-Run2-20261126-132603.csv
+2026-11-26 13:27:54,120 INFO o.a.j.r.Summariser: summary +     24 in 00:00:24 =    1.0/s Avg: 22575 Min: 21251 Max: 23787 Err:     6 (25.00%) Active: 0 Started: 25 Finished: 25
+2026-11-26 13:27:54,120 INFO o.a.j.r.Summariser: summary =    100 in 00:01:35 =    1.0/s Avg: 19743 Min:  1091 Max: 23845 Err:    23 (23.00%)

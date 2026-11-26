@@ -1,0 +1,30 @@
+﻿RINGKASAN HASIL PENGUJIAN
+
+Sesi      : Slow-baseline-VU10-Run2
+Tanggal   : 2026-11-25 12:21:13
+Skenario  : Slow - Fault latency NYALA selama sesi
+Mode      : baseline
+Endpoint  : pay-va-baseline
+VU        : 10
+Loops     : 10
+Total     : 100 request
+Durasi    : 158.8 detik
+Throughput: 0.63 req/detik
+
+HASIL
+
+Total     : 100
+Sukses    : 100
+Gagal     : 0
+Rate      : 100 %
+Avg       : 14944.4 ms
+Min       : 3129 ms
+P50       : 15262 ms
+P95       : 21278 ms
+Max       : 22727 ms
+
+FILE
+
+DATA mentah : DATA-Slow-baseline-VU10-Run2-20261125-122113.jtl
+Log JMeter : LOG-Slow-baseline-VU10-Run2-20261125-122113.log
+Data VA    : VA-Slow-baseline-VU10-Run2-20261125-122113.csv

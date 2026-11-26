@@ -1,0 +1,2 @@
+﻿"Tanggal","Skenario","Fault","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik","Throughput","Payment_Sukses_DB","Tiket_Terbuat_DB","Ticket_Confirmation_Rate"
+"2026-11-26 11:38:27","Slow","latency","Slow-baseline-VU25-Run1","baseline","25","1","pay-va-baseline","100","15","85","15","28059.3","3278","30003","30005","30011","124.5","0.8","83","83","83"

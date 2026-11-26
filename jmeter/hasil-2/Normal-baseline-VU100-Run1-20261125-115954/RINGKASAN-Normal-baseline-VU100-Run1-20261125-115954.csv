@@ -1,0 +1,2 @@
+﻿"Tanggal","Sesi","Mode","VU","Run","Endpoint","Total","Sukses","Gagal","Rate_Persen","Avg_ms","Min_ms","P50_ms","P95_ms","Max_ms","Durasi_detik"
+"2026-11-25 11:59:54","Normal-baseline-VU100-Run1","baseline","100","1","pay-va-baseline","100","30","70","30","25816.6","1440","30003","30006","30008","34.4"
